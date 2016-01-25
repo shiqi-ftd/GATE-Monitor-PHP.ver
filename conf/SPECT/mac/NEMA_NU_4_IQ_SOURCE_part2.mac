@@ -1,0 +1,128 @@
+########################
+# NEMA_NU_4_IQ_SOURCE.mac
+########################
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+#######################
+# Main Cylinder with two cold spot
+# area = 21206 - 11781 - 11781
+# area = 18850
+#######################
+/gate/source/addSource maincylinder
+/gate/source/maincylinder/setActivity 500000. becquerel
+/gate/source/maincylinder/gps/particle gamma 
+#/gate/source/maincylinder/setType backtoback 
+/gate/source/maincylinder/gps/monoenergy 122. keV 
+/gate/source/maincylinder/gps/angtype iso
+/gate/source/maincylinder/gps/type Volume
+/gate/source/maincylinder/gps/shape Cylinder
+/gate/source/maincylinder/gps/radius 15 mm
+/gate/source/maincylinder/gps/halfz  15 mm #30/2
+/gate/source/maincylinder/gps/centre 0 0 10 mm  #13-3
+/gate/source/maincylinder/gps/Forbid water_cylinder
+/gate/source/maincylinder/gps/Forbid air_cylinder
+
+#######################
+# rod #1
+# area = 141.3717
+#######################
+/gate/source/addSource rod1
+/gate/source/rod1/setActivity 100000. becquerel
+/gate/source/rod1/gps/particle gamma 
+#/gate/source/rod1/setType backtoback 
+/gate/source/rod1/gps/monoenergy 122. keV 
+/gate/source/rod1/gps/angtype iso
+/gate/source/rod1/gps/type Volume
+/gate/source/rod1/gps/shape Cylinder
+/gate/source/rod1/gps/radius 1.5 mm
+/gate/source/rod1/gps/halfz  10 mm #20/2
+/gate/source/rod1/gps/centre 0 7 -15 mm
+
+#######################
+# rod #2
+# area = 251.3274
+#######################
+/gate/source/addSource rod2
+/gate/source/rod2/setActivity 100000. becquerel
+/gate/source/rod2/gps/particle gamma 
+#/gate/source/rod2/setType backtoback 
+/gate/source/rod2/gps/monoenergy 122. keV 
+/gate/source/rod2/gps/angtype iso
+/gate/source/rod2/gps/type Volume
+/gate/source/rod2/gps/shape Cylinder
+/gate/source/rod2/gps/radius 2 mm
+/gate/source/rod2/gps/halfz  10 mm #20/2
+/gate/source/rod2/gps/centre 6.6574 2.1631 -15 mm
+
+
+#######################
+# rod #3
+# area = 392.6991
+#######################
+/gate/source/addSource rod3
+/gate/source/rod3/setActivity 100000. becquerel
+/gate/source/rod3/gps/particle gamma 
+#/gate/source/rod3/setType backtoback 
+/gate/source/rod3/gps/monoenergy 122. keV 
+/gate/source/rod3/gps/angtype iso
+/gate/source/rod3/gps/type Volume
+/gate/source/rod3/gps/shape Cylinder
+/gate/source/rod3/gps/radius 2.5 mm
+/gate/source/rod3/gps/halfz  10 mm #20/2
+/gate/source/rod3/gps/centre 4.1145 -5.6631 -15 mm
+
+#######################
+# rod #4
+# area = 15.7080
+#######################
+/gate/source/addSource rod4
+/gate/source/rod4/setActivity 100000. becquerel
+/gate/source/rod4/gps/particle gamma 
+#/gate/source/rod4/setType backtoback 
+/gate/source/rod4/gps/monoenergy 122. keV 
+/gate/source/rod4/gps/angtype iso
+/gate/source/rod4/gps/type Volume
+/gate/source/rod4/gps/shape Cylinder
+/gate/source/rod4/gps/radius 0.5 mm
+/gate/source/rod4/gps/halfz  10 mm #20/2
+/gate/source/rod4/gps/centre -4.1145 -5.6631 -15 mm
+
+#######################
+# rod #5
+# area = 62.8319
+#######################
+/gate/source/addSource rod5
+/gate/source/rod5/setActivity 100000. becquerel
+/gate/source/rod5/gps/particle gamma 
+#/gate/source/rod5/setType backtoback 
+/gate/source/rod5/gps/monoenergy 122. keV 
+/gate/source/rod5/gps/angtype iso
+/gate/source/rod5/gps/type Volume
+/gate/source/rod5/gps/shape Cylinder
+/gate/source/rod5/gps/radius 1.0 mm
+/gate/source/rod5/gps/halfz  10 mm #20/2
+/gate/source/rod5/gps/centre -6.6574 2.1631 -15 mm
+
+#############################
+# bottom
+# area = 942.4778
+#############################
+/gate/source/addSource bottom
+/gate/source/bottom/setActivity 100000. becquerel
+/gate/source/bottom/gps/particle gamma 
+#/gate/source/bottom/setType backtoback 
+/gate/source/bottom/gps/monoenergy 122. keV 
+/gate/source/bottom/gps/angtype iso
+/gate/source/bottom/gps/centre 0. 0. 0. cm
+/gate/source/bottom/gps/type Volume
+/gate/source/bottom/gps/shape Cylinder
+/gate/source/bottom/gps/radius 10 mm
+/gate/source/bottom/gps/halfz  1.5 mm #3/2
+/gate/source/bottom/gps/centre 0 0 -26.5 mm 
+
+
+
+

@@ -1,0 +1,52 @@
+############################################################
+# I125_sphere.mac - I125 sphere 
+#
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+
+
+# I123 source is inside a sphere filled with water!
+#/gate/world/daughters/name movsource
+#/gate/world/daughters/insert sphere
+#/gate/movsource/geometry/setRmax 3.91 mm      #30mm/2
+#/gate/movsource/geometry/setRmin 0. mm 
+#/gate/movsource/geometry/setPhiStart 0 deg
+#/gate/movsource/geometry/setThetaStart 0 deg
+#/gate/movsource/geometry/setDeltaPhi 360 deg
+#/gate/movsource/geometry/setDeltaTheta 360 deg
+#/gate/movsource/setMaterial Water
+#/gate/movsource/vis/setColor blue
+#/gate/movsource/vis/setVisible true
+
+# type of source I-125
+# Gamma Rays
+# Enerfy        Absolute 
+# 1) 35.49  6.68%
+# X-rays
+# 1) 27.38  113.7%
+# 2) 31.1 25.8%
+
+#1
+/gate/source/addSource I125
+/gate/source/I125/gps/particle gamma
+/gate/source/I125/gps/type Volume
+/gate/source/I125/gps/shape Sphere
+/gate/source/I125/gps/radius 1 cm
+/gate/source/I125/gps/energytype User
+/gate/source/I125/gps/histname energy
+#/gate/source/I125/setActivity 0.000003 Ci # 3 micro curi
+/gate/source/I125/setActivity  0.00003 Ci # 30 micro curi
+/gate/source/I125/gps/histpoint 0.02738 0
+/gate/source/I125/gps/histpoint 0.02738 1.137
+/gate/source/I125/gps/histpoint 0.02738 0
+/gate/source/I125/gps/histpoint 0.0311  0
+/gate/source/I125/gps/histpoint 0.0311  0.258
+/gate/source/I125/gps/histpoint 0.0311  0
+/gate/source/I125/gps/histpoint 0.03549 0
+/gate/source/I125/gps/histpoint 0.03549 0.068
+/gate/source/I125/gps/histpoint 0.03549 0
+/gate/source/I125/gps/angtype iso
+/gate/source/I125/dump 1

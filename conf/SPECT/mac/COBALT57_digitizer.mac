@@ -1,0 +1,27 @@
+#############################################################
+# digitizer.mac - Inveon SPECT digitizer
+#
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+
+#Adder sums up all the interaction with one photon within the same volume, and generates one pulse.
+#Energy = sum of all energy deposited by one single photon
+#Location = energy-weighted centroid
+/gate/digitizer/Singles/insert adder
+/gate/digitizer/Singles/insert readout
+/gate/digitizer/Singles/readout/setDepth 2
+/gate/digitizer/Singles/insert blurring
+#energy blurring for cobalt57
+/gate/digitizer/Singles/blurring/setResolution 0.14
+/gate/digitizer/Singles/blurring/setEnergyOfReference 122. keV
+/gate/digitizer/Singles/insert spblurring
+/gate/digitizer/Singles/spblurring/setSpresolution 2 mm
+#/gate/digitizer/Singles/spblurring/verbose 0
+#energy thresholds for cobatl57
+/gate/digitizer/Singles/insert thresholder
+/gate/digitizer/Singles/thresholder/setThreshold 110. keV
+/gate/digitizer/Singles/insert upholder
+/gate/digitizer/Singles/upholder/setUphold 134. keV

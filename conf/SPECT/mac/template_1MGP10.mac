@@ -1,0 +1,227 @@
+#############################################################
+# inveon.mac - Inveon SPECT
+#
+# Author: Sanghyeb(Sam) Lee (C) slee91@utk.edu
+#
+# Created: 12/21/11 
+# 
+#############################################################
+
+#SPECTHead position - determines ROR
+/control/alias ROR 25 mm
+#Need to change this
+
+# V I S U A L I S A T I O N
+#####
+#/vis/disable
+/control/execute vis.mac
+
+# M A N D A T O R Y
+#####
+/gate/geometry/setMaterialDatabase ../data/GateMaterials.db
+
+# D E B U G I N G
+#
+#/control/execute axis.mac
+
+
+# G E O M E T R Y
+#####
+
+# World
+# Define the world dimensions
+##
+/gate/world/geometry/setXLength 150 cm
+/gate/world/geometry/setYLength 150 cm
+/gate/world/geometry/setZLength 150 cm
+
+# Scanner Head
+# Create a new box representing the main head-volume
+
+# SPECThead is the name of the predefined SPECT system
+# Create the SPECT system, which will yield an Interfile output of projection data
+##
+/gate/world/daughters/name SPECThead
+/gate/world/daughters/insert box
+/gate/SPECThead/geometry/setXLength 20 cm #8/2=4 previous 9.5
+/gate/SPECThead/geometry/setYLength 20.3 cm #20.3/2=10.15
+/gate/SPECThead/geometry/setZLength 23.7 cm #23.7/2
+# This is ROR(25mm) for 1MGP10 collimator
+# ROR(25mm) - d(2.5mm) = 23.5mm
+#/gate/SPECThead/placement/setTranslation  123.5 0. 0. mm # 23.5 mm + 100m = 123.5 mm 
+# This is ROR(30mm) for 5MWB10 collimator
+# ROR(30mm) - d(2.5mm) = 27.5mm
+/gate/SPECThead/placement/setTranslation  127.5 0. 0. mm # 27.5 mm + 100m = 127.5 mm
+# This is ROR(360mm) for flood image
+# ROR(360mm) - d(2.5mm) = 357.5 mm
+#/gate/SPECThead/placement/setTranslation 457.5 0. 0. mm # (360mm-2.5) = 357.5 mm + 100m
+
+/gate/SPECThead/setMaterial Air
+/gate/SPECThead/repeaters/insert ring
+/gate/SPECThead/ring/setRepeatNumber 2 #2
+/gate/SPECThead/moves/insert orbiting
+#/gate/SPECThead/orbiting/setSpeed 12 deg/s #0.12
+#/gate/SPECThead/orbiting/setPoint1 0 0 0 cm
+#/gate/SPECThead/orbiting/setPoint2 0 0 1 cm
+/gate/SPECThead/vis/forceWireframe
+/gate/SPECThead/vis/setVisible false
+
+# SPECTheadHousing - lead
+# Creates a SPECTHead Housing which consists of
+# 1. (exterior+interior) - Lead, 1 cm thick
+# 2. (collimeter mount)  - Tungsten
+/control/execute 1MGP10_inveonHousing.mac
+#/control/execute 5MWB10_inveonHousing.mac
+
+# Collimator
+# Choose which Collimator you want to use
+/control/execute ../mac/1MGP10.mac
+#/control/execute ../mac/1MHR05_30.mac
+#/control/execute ../mac/1MHR05.mac
+#/control/execute ../mac/1MME30.mac
+#/control/execute ../mac/5MWB10.mac
+
+
+# Pixelated Detectors
+# It is now part of the collimator macro.
+# Do not include the below macro. It is for debugging and flood image only
+#/control/execute ../mac/pixelatedcrystal.mac
+
+# PHANTOM
+# Create the phantom volume
+##
+/control/execute ../mac/NEMA_NU_4_MOUSE.mac
+
+#  S Y S T E M
+######
+# The system acts as an interpretor between the GATE geometry and data outputs for reconstruction 
+# in our case, the Interfile writer
+# A system must know which components of the geometry are parts of the scanner, and what 
+# their role are.
+# For the moment, there is only a system SPECThead, which was built when the SPECThead volume
+# was inserted. 
+# The SPECThead system is made of three levels: base (for the head), crystal (for the crystal and crystal matrix) 
+# and pixel (for individual crystals for pixellated gamma camera)
+# For now, only the base of the system is attached to a volume: the volume SPECThead
+# For the system to get information about your crystal, the level crystal must be attached to the volume 
+# that has been defined for the scintillating crystal (crystal)
+##
+
+/gate/systems/SPECThead/crystal/attach module
+/gate/systems/SPECThead/pixel/attach pixel
+/gate/systems/SPECThead/describe 
+
+
+# S E N S I T I V E   D E T E C T O R S
+######
+# GATE provides two sensitive detectors, which have two different functions
+# Using them properly is very important for getting accurate results
+##
+
+# Crystal SD
+#
+# The crystal SD makes it possible to record hits in a sensitive volume (e.g.,. in a scintillation crystal)
+# It must be attached to any volume for which hit-data must be obtained
+# For recording hits in the NaI volume only, the name of which is crystal, this volume is attached 
+# to the crystal SD
+##
+
+#/gate/crystal/attachCrystalSD
+/gate/pixel/attachCrystalSD
+
+# Phantom SD
+#
+# The phantom SD makes it possible to record Compton events in the volumes within the field of view
+# This can provide information for result analysis to discriminate between 
+# scattered and unscattered photons
+# It must be attached to each and every volume for whom Compton interactions have to be recorded
+##
+
+/gate/compartment/attachPhantomSD
+/gate/shielding/attachPhantomSD
+/gate/SPECThead/attachPhantomSD
+/gate/collimator/attachPhantomSD
+/gate/Housing/attachPhantomSD
+
+
+
+#  P H Y S I C S
+#####
+/gate/physics/addProcess PhotoElectric
+/gate/physics/processes/PhotoElectric/setModel StandardModel
+
+/gate/physics/addProcess Compton
+/gate/physics/processes/Compton/setModel PenelopeModel
+
+/gate/physics/addProcess RayleighScattering
+/gate/physics/processes/RayleighScattering/setModel PenelopeModel
+
+/gate/physics/addProcess ElectronIonisation
+/gate/physics/processes/ElectronIonisation/setModel StandardModel e-
+
+/gate/physics/addProcess Bremsstrahlung
+/gate/physics/processes/Bremsstrahlung/setModel StandardModel e-
+
+/gate/physics/addProcess MultipleScattering e-
+
+/gate/physics/processList Enabled
+/gate/physics/processList Initialized
+
+# I N I T I A L I Z A T I O N
+#####
+
+/gate/run/initialize
+
+
+
+# D E F I N E  T H E  S O U R C E
+#####
+##### defining COBALT57 point source
+/control/execute ../mac/COBALT57_point.mac
+#/control/execute ../mac/T99M_sphere.mac
+
+
+# D I G I T I Z E R
+/control/execute ../mac/COBALT57_digitizer.mac
+#/control/execute ../mac/T99M_digitizersp20.mac
+
+# O U T P U T
+#####
+
+/gate/output/root/enable
+/gate/output/root/setFileName test_5MWB10
+/gate/output/root/setRootSinglesAdderFlag 1
+/gate/output/root/setRootSinglesBlurringFlag 1 
+/gate/output/root/setRootSinglesSpblurringFlag 1
+/gate/output/root/setRootSinglesThresholderFlag 1
+/gate/output/root/setRootSinglesUpholderFlag 1
+
+
+#   R A N D O M
+# JamesRandom Ranlux64 MersenneTwister
+/gate/random/setEngineName Ranlux64
+#/gate/random/setEngineSeed default
+/gate/random/setEngineSeed auto
+#/gate/random/setEngineSeed 123456789
+#/gate/random/resetEngineFrom fileName
+/gate/random/verbose 1
+
+
+
+# E X P E R I M E N T 
+#####
+#/gate/application/setTotalNumberOfPrimaries 666000000 #900 * 740000
+/gate/application/setTimeSlice      60  s #10 minutes
+/gate/application/setTimeStart      0    s
+/gate/application/setTimeStop      60 s #60 * 10 seconds 
+
+
+# V E R B O S I T Y
+#####
+
+/control/execute ../mac/Verbose.mac
+
+# L E T' S   R U N   T H E   S I M U L A T I O N  !
+#####
+/gate/application/startDAQ
+

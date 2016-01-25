@@ -1,0 +1,70 @@
+#####################
+# COBALT 57 Phantom #
+#####################
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+#Main Body
+/gate/world/daughters/name Phantom
+/gate/world/daughters/insert box
+/gate/Phantom/geometry/setXLength 9.525 mm
+/gate/Phantom/geometry/setYLength 9.525 mm
+/gate/Phantom/geometry/setZLength 38.1 mm
+/gate/Phantom/setMaterial Air
+/gate/Phantom/vis/setColor blue
+
+#main cylinder
+/gate/Phantom/daughters/name part1
+/gate/Phantom/daughters/insert cylinder
+/gate/part1/geometry/setRmax 4.7625 mm #9.525
+/gate/part1/geometry/setRmin 0 mm # full body
+/gate/part1/geometry/setHeight 19.05 mm #19.05
+/gate/part1/placement/setTranslation 0 0 -9.525 mm
+/gate/part1/setMaterial Polyethylene
+
+/gate/part1/daughters/name part1a
+/gate/part1/daughters/insert cylinder
+/gate/part1a/geometry/setRmax 4.265 mm #8.525
+/gate/part1a/geometry/setRmin 0 mm     #full body
+/gate/part1a/geometry/setHeight 18.525 mm #1.5in=38mm
+/gate/part1a/placement/setTranslation 0 0 1 mm
+/gate/part1a/setMaterial Water
+/gate/part1a/vis/forceSolid
+#side cone 
+/gate/Phantom/daughters/name part2
+/gate/Phantom/daughters/insert cone
+/gate/part2/geometry/setRmax1 4.7625 mm #3.2/2
+/gate/part2/geometry/setRmin1 0 mm
+/gate/part2/geometry/setRmax2 1.5875 mm #3.2/2 #3.175
+/gate/part2/geometry/setRmin2 0 mm #3.2/2
+/gate/part2/geometry/setHeight 19.05 mm
+/gate/part2/setMaterial Polyethylene
+/gate/part2/placement/setTranslation 0 0 9.525 mm
+/gate/part2/vis/setColor red
+/gate/part2/vis/forceSolid
+
+/gate/part2/daughters/name part2a
+/gate/part2/daughters/insert cone
+/gate/part2a/geometry/setRmax1 4.2625 mm #3.2/2
+/gate/part2a/geometry/setRmin1 0 mm
+/gate/part2a/geometry/setRmax2 1.0875 mm #3.2/2 #3.175
+/gate/part2a/geometry/setRmin2 0 mm #3.2/2
+/gate/part2a/geometry/setHeight 18.05 mm
+/gate/part2a/setMaterial Water
+/gate/part2a/placement/setTranslation 0 0 -1 mm
+/gate/part2a/vis/forceSolid
+
+#cobalt
+/gate/source/addSource CO57
+/gate/source/CO57/gps/type Point #point source
+/gate/source/CO57/gps/centre 0. 0. 0. cm
+/gate/source/CO57/gps/particle gamma  #photon emission
+/gate/source/CO57/gps/energytype Mono # mono energy
+/gate/source/CO57/gps/monoenergy 122. keV ##energy value(or bounds)
+/gate/source/CO57/setActivity 0.000020 Ci # Radioactivity = 20 micro curie
+/gate/source/CO57/gps/angtype iso
+
+
+

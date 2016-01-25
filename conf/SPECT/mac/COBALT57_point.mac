@@ -1,0 +1,20 @@
+############################################################
+# COBALT57_point.mac - Cobalt 57 point sou
+#
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+# Energy = 122 kev
+# Activity = 20 micro Curie
+#############################################################
+
+/gate/source/addSource SourceConfinement
+/gate/source/SourceConfinement/gps/type Point #point source
+/gate/source/SourceConfinement/gps/centre 0. 0. 0. cm
+/gate/source/SourceConfinement/gps/particle gamma  #photon emission
+/gate/source/SourceConfinement/gps/energytype Mono # mono energy
+/gate/source/SourceConfinement/gps/monoenergy 122. keV ##energy value(or bounds)
+/gate/source/SourceConfinement/setActivity 0.000020 Ci # Radioactivity = 17 micro Curi = 1.7 * 10^-5 Ci
+/gate/source/SourceConfinement/gps/angtype iso

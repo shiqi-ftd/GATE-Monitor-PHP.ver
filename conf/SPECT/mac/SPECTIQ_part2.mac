@@ -1,0 +1,148 @@
+############################################
+# SPECTIQ      .mac                        #
+############################################
+# downsized NEMA Imag Quality Phantom for SPECT #
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+# 84.1 M bequerel = 84100000
+# 5.1 MBq 
+# 2.55 MBq
+# 99m TC solution
+
+#######################
+# Main Cylinder with two cold spot(outer radius=7.0, outer length=10.5)
+# area = 7273.6 - 404.0874 - 404.0874
+# area = 6465.4
+#######################
+/gate/source/addSource maincylinder
+/gate/source/maincylinder/setActivity 78252000 becquerel
+#/gate/source/maincylinder/setActivity 4654000 becquerel
+#/gate/source/maincylinder/setActivity 2327000 becquerel
+#/gate/source/maincylinder/setActivity 465400 becquerel
+/gate/source/maincylinder/gps/particle gamma 
+/gate/source/maincylinder/gps/monoenergy 140. keV 
+/gate/source/maincylinder/gps/angtype iso
+/gate/source/maincylinder/gps/type Volume
+/gate/source/maincylinder/gps/shape Cylinder
+/gate/source/maincylinder/gps/radius 10.5 mm
+/gate/source/maincylinder/gps/halfz  10.5 mm #21/2
+/gate/source/maincylinder/gps/centre 0 0 4.3 mm  #13-3
+/gate/source/maincylinder/gps/Forbid water_cylinder
+/gate/source/maincylinder/gps/Forbid air_cylinder
+
+#######################
+# rod #1
+# area = 2.8716
+#######################
+/gate/source/addSource rod1
+/gate/source/rod1/setActivity 34756. becquerel
+#/gate/source/rod1/setActivity 2107.895 becquerel
+#/gate/source/rod1/setActivity 1053.9 becquerel
+#/gate/source/rod1/setActivity 210.7895 becquerel
+/gate/source/rod1/gps/particle gamma 
+/gate/source/rod1/gps/monoenergy 140. keV 
+/gate/source/rod1/gps/angtype iso
+/gate/source/rod1/gps/type Volume
+/gate/source/rod1/gps/shape Cylinder
+/gate/source/rod1/gps/radius 0.3750 mm
+/gate/source/rod1/gps/halfz  3.25 mm #6.5/2
+/gate/source/rod1/gps/centre 0 4.9 -9.45 mm
+
+#######################
+# rod #2
+# area = 5.1051
+#######################
+/gate/source/addSource rod2
+/gate/source/rod2/setActivity 61788. becquerel
+#/gate/source/rod2/setActivity 3747.394 becquerel
+#/gate/source/rod2/setActivity 1873.7 becquerel
+#/gate/source/rod2/setActivity 374.7394 becquerel
+/gate/source/rod2/gps/particle gamma 
+/gate/source/rod2/gps/monoenergy 140. keV 
+/gate/source/rod2/gps/angtype iso
+/gate/source/rod2/gps/type Volume
+/gate/source/rod2/gps/shape Cylinder
+/gate/source/rod2/gps/radius 0.5 mm
+/gate/source/rod2/gps/halfz  3.25 mm #6.5/2
+/gate/source/rod2/gps/centre 4.6602 1.5142 -9.45 mm
+
+
+#######################
+# rod #3
+# area = 11.4864
+#######################
+/gate/source/addSource rod3
+/gate/source/rod3/setActivity  139020. becquerel
+#/gate/source/rod3/setActivity 8431.581 becquerel
+#/gate/source/rod3/setActivity 4215.8 becquerel
+#/gate/source/rod3/setActivity 843.1581 becquerel
+/gate/source/rod3/gps/particle gamma 
+/gate/source/rod3/gps/monoenergy 140. keV 
+/gate/source/rod3/gps/angtype iso
+/gate/source/rod3/gps/type Volume
+/gate/source/rod3/gps/shape Cylinder
+/gate/source/rod3/gps/radius 0.75 mm
+/gate/source/rod3/gps/halfz  3.25 mm #20/2
+/gate/source/rod3/gps/centre 2.8801 -3.9642 -9.45 mm
+
+#######################
+# rod #4
+# area = 0.6254
+#######################
+/gate/source/addSource rod4
+/gate/source/rod4/setActivity 7569.3 becquerel
+#/gate/source/rod4/setActivity 459.074 becquerel
+#/gate/source/rod4/setActivity 247.5370 becquerel
+#/gate/source/rod4/setActivity 45.9074 becquerel
+/gate/source/rod4/gps/particle gamma 
+/gate/source/rod4/gps/monoenergy 140. keV 
+/gate/source/rod4/gps/angtype iso
+/gate/source/rod4/gps/type Volume
+/gate/source/rod4/gps/shape Cylinder
+/gate/source/rod4/gps/radius 0.175 mm
+/gate/source/rod4/gps/halfz  3.25 mm #20/2
+/gate/source/rod4/gps/centre -2.8801 -3.9642 -9.45 mm
+
+#######################
+# rod #5
+# area = 1.2763
+#######################
+/gate/source/addSource rod5
+/gate/source/rod5/setActivity 15447 becquerel
+#/gate/source/rod5/setActivity 936 becquerel
+#/gate/source/rod5/setActivity 468 becquerel
+#/gate/source/rod5/setActivity 93.6867 becquerel
+/gate/source/rod5/gps/particle gamma 
+/gate/source/rod5/gps/monoenergy 140. keV 
+/gate/source/rod5/gps/angtype iso
+/gate/source/rod5/gps/type Volume
+/gate/source/rod5/gps/shape Cylinder
+/gate/source/rod5/gps/radius 0.25 mm
+/gate/source/rod5/gps/halfz  3.25 mm #20/2
+/gate/source/rod5/gps/centre -4.6602 1.5142 -9.45 mm
+
+#############################
+# bottom
+# area = 461.8141
+#############################
+/gate/source/addSource bottom
+/gate/source/bottom/setActivity 5589400 becquerel
+#/gate/source/bottom/setActivity 33840 becquerel
+#/gate/source/bottom/setActivity 16920 becquerel
+#/gate/source/bottom/setActivity 3384 becquerel
+/gate/source/bottom/gps/particle gamma 
+/gate/source/bottom/gps/monoenergy 140. keV 
+/gate/source/bottom/gps/angtype iso
+/gate/source/bottom/gps/centre 0. 0. 0. cm
+/gate/source/bottom/gps/type Volume
+/gate/source/bottom/gps/shape Cylinder
+/gate/source/bottom/gps/radius 7 mm
+/gate/source/bottom/gps/halfz  1.05 mm #3/2
+/gate/source/bottom/gps/centre 0 0 -13.65 mm
+
+
+
+

@@ -1,0 +1,114 @@
+/gate/geometry/setMaterialDatabase /home/slee91/gate/example0_cluster/mac/../data/GateMaterials.db
+/gate/world/geometry/setXLength 50 cm
+/gate/world/geometry/setYLength 50 cm
+/gate/world/geometry/setZLength 50 cm
+/gate/world/daughters/name SPECThead
+/gate/world/daughters/insert box
+/gate/SPECThead/geometry/setXLength 20 cm
+/gate/SPECThead/geometry/setYLength 20.3 cm
+/gate/SPECThead/geometry/setZLength 23.7 cm
+/gate/SPECThead/placement/setTranslation 123.5 0. 0. mm
+/gate/SPECThead/setMaterial Air
+/gate/SPECThead/repeaters/insert ring
+/gate/SPECThead/ring/setRepeatNumber 2
+/gate/SPECThead/moves/insert orbiting
+/gate/SPECThead/orbiting/setSpeed 12 deg/s
+/gate/SPECThead/orbiting/setPoint1 0 0 0 cm
+/gate/SPECThead/orbiting/setPoint2 0 0 1 cm
+/gate/SPECThead/vis/forceWireframe
+/gate/SPECThead/vis/setVisible false
+/gate/SPECThead/daughters/name crystal
+/gate/SPECThead/daughters/insert box
+/gate/crystal/geometry/setXLength 10 mm
+/gate/crystal/geometry/setYLength 149.6 mm
+/gate/crystal/geometry/setZLength 149.6 mm
+/gate/crystal/placement/setTranslation -7.5 0. 0. mm
+/gate/crystal/setMaterial Plastic
+/gate/crystal/vis/setColor white
+/gate/crystal/daughters/name pixel
+/gate/crystal/daughters/insert box
+/gate/pixel/geometry/setXLength 10. mm
+/gate/pixel/geometry/setYLength 2. mm
+/gate/pixel/geometry/setZLength 2. mm
+/gate/pixel/placement/setTranslation 0. 0. 0. mm
+/gate/pixel/setMaterial NaI
+/gate/pixel/vis/setColor red
+/gate/pixel/repeaters/insert cubicArray
+/gate/pixel/cubicArray/setRepeatNumberY 68
+/gate/pixel/cubicArray/setRepeatNumberZ 68
+/gate/pixel/cubicArray/setRepeatVector 0 2.2 2.2 mm
+/gate/SPECThead/daughters/name compartment
+/gate/SPECThead/daughters/insert box
+/gate/compartment/geometry/setXLength 15 mm
+/gate/compartment/geometry/setYLength 149.6 mm
+/gate/compartment/geometry/setZLength 149.6 mm
+/gate/compartment/placement/setTranslation 5. 0. 0. mm
+/gate/compartment/setMaterial Glass
+/gate/compartment/vis/setColor grey
+/gate/SPECThead/daughters/name shielding
+/gate/SPECThead/daughters/insert box
+/gate/shielding/geometry/setXLength 15 mm
+/gate/shielding/geometry/setYLength 149.6 mm
+/gate/shielding/geometry/setZLength 149.6 mm
+/gate/shielding/placement/setTranslation 20 0. 0. mm
+/gate/shielding/setMaterial Lead
+/gate/shielding/vis/setColor magenta
+
+/gate/systems/SPECThead/pixel/attach pixel
+/gate/systems/SPECThead/describe
+/gate/pixel/attachCrystalSD
+/gate/physics/addProcess PhotoElectric
+/gate/physics/processes/PhotoElectric/setModel StandardModel
+/gate/physics/addProcess Compton
+/gate/physics/processes/Compton/setModel PenelopeModel
+/gate/physics/addProcess RayleighScattering
+/gate/physics/processes/RayleighScattering/setModel PenelopeModel
+/gate/physics/addProcess ElectronIonisation
+/gate/physics/processes/ElectronIonisation/setModel StandardModel e-
+/gate/physics/addProcess Bremsstrahlung
+/gate/physics/processes/Bremsstrahlung/setModel StandardModel e-
+/gate/physics/addProcess MultipleScattering e-
+/gate/physics/processList Enabled
+/gate/physics/processList Initialized
+/gate/physics/Gamma/SetCutInRegion SPECThead 0.1 cm
+/gate/physics/Electron/SetCutInRegion SPECThead 1.0 cm
+/gate/run/initialize
+/gate/timing/setTime 0. s
+/gate/timing/setTime 30 s
+/gate/timing/setTime 60 s
+/gate/timing/setTime 120 s
+/gate/timing/setTime 150 s
+/gate/timing/setTime 180 s
+/gate/timing/setTime 210 s
+/gate/timing/setTime 240 s
+/gate/timing/setTime 270 s
+/gate/timing/setTime 300 s
+/gate/timing/setTime 330 s
+/gate/timing/setTime 360 s
+/gate/timing/setTime 390 s
+/gate/timing/setTime 420 s
+/gate/timing/setTime 450 s
+/gate/timing/setTime 480 s
+/gate/timing/setTime 510 s
+/gate/timing/setTime 540 s
+/gate/timing/setTime 570 s
+/gate/timing/setTime 600 s
+/gate/timing/setTime 630 s
+/gate/timing/setTime 660 s
+/gate/timing/setTime 690 s
+/gate/timing/setTime 720 s
+/gate/timing/setTime 750 s
+/gate/timing/setTime 780 s
+/gate/timing/setTime 810 s
+/gate/timing/setTime 840 s
+/gate/timing/setTime 870 s
+/gate/timing/setTime 900 s
+
+/gate/source/addSource SourceConfinement
+/gate/source/SourceConfinement/gps/type Point
+/gate/source/SourceConfinement/gps/centre 0. 0. 0. cm
+/gate/source/SourceConfinement/gps/particle gamma
+/gate/source/SourceConfinement/gps/energytype Mono
+/gate/source/SourceConfinement/gps/monoenergy 122. keV
+/gate/source/SourceConfinement/setActivity 0.00002 Ci
+/gate/source/SourceConfinement/gps/angtype iso

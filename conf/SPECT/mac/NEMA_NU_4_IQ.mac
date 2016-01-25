@@ -1,0 +1,152 @@
+############################################
+# NEMA_NU_4_IQ.mac                      #
+############################################
+# NEMA Imag Quality Phantom
+###############################################3
+
+#############################
+##Main Body
+#############################
+/gate/world/daughters/name Body
+/gate/world/daughters/insert cylinder
+/gate/Body/geometry/setRmax 16.7500  mm # 33.5mm/2
+/gate/Body/geometry/setRmin 15 mm       # 30.0mm/2
+/gate/Body/geometry/setHeight 56 mm  # 3mm + 20mm + 33mm
+/gate/Body/setMaterial Polyethylene
+/gate/Body/vis/setColor blue
+/gate/Body/vis/forceWireframe
+
+###Main Body -- Upper part  --just cylinder containing activity
+/gate/Body/daughters/name upper
+/gate/Body/daughters/insert cylinder
+/gate/upper/geometry/setRmax 15 mm # 30 mm/2
+/gate/upper/geometry/setRmin 0  mm # full cylinder
+/gate/upper/geometry/setHeight 30 mm  # 30 mm 
+/gate/upper/setMaterial Air
+/gate/upper/vis/setColor yellow
+/gate/upper/vis/forceSolid
+
+
+
+/gate/upper/placement/setTranslation 0 0 10 mm  #13-3
+
+###Main body --- Upper part -- Top Cover
+/gate/world/daughters/name upper_top
+/gate/world/daughters/insert cylinder
+/gate/upper_top/geometry/setRmax 15 mm # 30 mm/2
+/gate/upper_top/geometry/setRmin 0  mm # full cylinder
+/gate/upper_top/geometry/setHeight 3 mm  # 3 mm 
+/gate/upper_top/setMaterial Polyethylene
+/gate/upper_top/vis/setColor green
+/gate/upper_top/vis/forceSolid
+/gate/upper_top/placement/setTranslation 0 0 23.5 mm 
+
+
+##Main body --- Upper part -- Water Cylinder (COLD SPOT)
+/gate/world/daughters/name water_cylinder
+/gate/world/daughters/insert cylinder
+/gate/water_cylinder/geometry/setRmax 4 mm # 8 mm/2
+/gate/water_cylinder/geometry/setRmin 0  mm # full cylinder
+/gate/water_cylinder/geometry/setHeight 15 mm  # 3 mm 
+/gate/water_cylinder/setMaterial Air
+/gate/water_cylinder/vis/setColor cyan
+/gate/water_cylinder/vis/forceSolid
+/gate/water_cylinder/placement/setTranslation 0 -7.5 14.5 mm 
+
+
+##Main body --- Uppser part -- Air Cylinder (COLD SPOT)
+/gate/world/daughters/name air_cylinder
+/gate/world/daughters/insert cylinder
+/gate/air_cylinder/geometry/setRmax 4 mm # 8 mm/2
+/gate/air_cylinder/geometry/setRmin 0  mm # full cylinder
+/gate/air_cylinder/geometry/setHeight 15 mm  # 3 mm 
+/gate/air_cylinder/setMaterial Water
+/gate/air_cylinder/vis/setColor white
+/gate/air_cylinder/vis/forceSolid
+/gate/air_cylinder/placement/setTranslation 0 7.5 14.5 mm 
+
+##Main Body -- cylinder 
+###Main Body -- Lower part
+/gate/Body/daughters/name lower
+/gate/Body/daughters/insert cylinder
+/gate/lower/geometry/setRmax 15 mm           #30.0mm/2
+/gate/lower/geometry/setRmin 0 mm #full
+/gate/lower/geometry/setHeight 23 mm      
+/gate/lower/setMaterial Polyethylene
+/gate/lower/vis/setColor red
+/gate/lower/vis/forceWireframe
+/gate/lower/placement/setTranslation 0 0 -16.5 mm
+
+### Main Body Lower part -- hole1
+### diameter 1mm 
+/gate/lower/daughters/name lower_hole1 
+/gate/lower/daughters/insert cylinder
+/gate/lower_hole1/geometry/setRmax 1.5 mm          # 1.0/2
+/gate/lower_hole1/geometry/setRmin 0 mm #full
+/gate/lower_hole1/geometry/setHeight 20 mm      
+/gate/lower_hole1/setMaterial Air
+/gate/lower_hole1/vis/setColor yellow
+/gate/lower_hole1/vis/forceSolid
+/gate/lower_hole1/placement/setTranslation 0 7 1.5 mm
+
+
+### Main Body Lower part -- hole2
+### diameter 1mm rotated by z axis by 72 degree
+/gate/lower/daughters/name lower_hole2
+/gate/lower/daughters/insert cylinder
+/gate/lower_hole2/geometry/setRmax 2 mm          # 1.0/2
+/gate/lower_hole2/geometry/setRmin 0 mm #full
+/gate/lower_hole2/geometry/setHeight 20 mm    
+/gate/lower_hole2/setMaterial Air
+/gate/lower_hole2/vis/setColor yellow
+/gate/lower_hole2/vis/forceSolid
+/gate/lower_hole2/placement/setTranslation 6.6574 2.1631 1.5 mm
+
+### Main Body Lower part -- hole3
+### diameter 1mm rotated by z axis by 72*2 degree
+/gate/lower/daughters/name lower_hole3
+/gate/lower/daughters/insert cylinder
+/gate/lower_hole3/geometry/setRmax 2.5 mm          # 2.0/2
+/gate/lower_hole3/geometry/setRmin 0 mm #full
+/gate/lower_hole3/geometry/setHeight 20 mm       
+/gate/lower_hole3/setMaterial Air
+/gate/lower_hole3/vis/setColor yellow
+/gate/lower_hole3/vis/forceSolid
+/gate/lower_hole3/placement/setTranslation 4.1145 -5.6631 1.5 mm
+
+### Main Body Lower part -- hole4
+### diameter 1mm rotated by z axis by 72*3 degree
+/gate/lower/daughters/name lower_hole4
+/gate/lower/daughters/insert cylinder
+/gate/lower_hole4/geometry/setRmax 0.5 mm          # 3/2
+/gate/lower_hole4/geometry/setRmin 0 mm #full
+/gate/lower_hole4/geometry/setHeight 20 mm      
+/gate/lower_hole4/setMaterial Air
+/gate/lower_hole4/vis/setColor yellow
+/gate/lower_hole4/vis/forceSolid
+/gate/lower_hole4/placement/setTranslation -4.1145 -5.6631 1.5 mm
+
+### Main Body Lower part -- hole5
+### diameter 1mm rotated by z axis by 72*4 degree
+/gate/lower/daughters/name lower_hole5
+/gate/lower/daughters/insert cylinder
+/gate/lower_hole5/geometry/setRmax 1 mm          # 4.0/2
+/gate/lower_hole5/geometry/setRmin 0 mm #full
+/gate/lower_hole5/geometry/setHeight 20 mm       
+/gate/lower_hole5/setMaterial Air
+/gate/lower_hole5/vis/setColor yellow
+/gate/lower_hole5/vis/forceSolid
+/gate/lower_hole5/placement/setTranslation -6.6574 2.1631 1.5 mm
+
+## Main Body Lower part -- bottom hle
+## diameter 20mm at the bottom
+/gate/lower/daughters/name lower_bottom
+/gate/lower/daughters/insert cylinder
+/gate/lower_bottom/geometry/setRmax 10 mm           #20.0mm/2
+/gate/lower_bottom/geometry/setRmin 0 mm #full
+/gate/lower_bottom/geometry/setHeight 3 mm       #3
+/gate/lower_bottom/setMaterial Air
+/gate/lower_bottom/vis/setColor yellow
+/gate/lower_bottom/vis/forceSolid
+/gate/lower_bottom/placement/setTranslation 0 0 -10 mm
+

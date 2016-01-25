@@ -1,0 +1,85 @@
+############################################################
+# I123_sphere.mac - I123 sphere 
+#
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+
+
+
+# I123 source is inside a sphere filled with water!
+/gate/world/daughters/name movsource
+/gate/world/daughters/insert sphere
+/gate/movsource/geometry/setRmax 3.91 mm      #30mm/2
+/gate/movsource/geometry/setRmin 0. mm 
+/gate/movsource/geometry/setPhiStart 0 deg
+/gate/movsource/geometry/setThetaStart 0 deg
+/gate/movsource/geometry/setDeltaPhi 360 deg
+/gate/movsource/geometry/setDeltaTheta 360 deg
+/gate/movsource/setMaterial Water
+/gate/movsource/vis/setColor blue
+/gate/movsource/vis/setVisible true
+
+# type of source I-123
+# energy type
+# six decay-lines are simulated 
+# from Erturk's thesis 2010
+# and Comparison of Image Quality of Different Iodine Isotopes, 2007
+
+# Gamma Rays
+# Enerfy        
+# 1) 158.97 keV 83.3%    =       
+# 2) 346.35 keV 0.126%
+# 3) 440.02 keV: 0.428%
+# 4) 505.33 keV: 0.316%
+# 5) 528.96 keV: 1.39%
+# 6) 538.54 keV: 0.382%
+# X-rays
+# 1) 27.202 keV: 4.187917
+# 2) 27.472 keV: 7.806277
+# 3) 30.944 keV: 0.705245
+# 4) 30.995 keV: 1.35856
+
+#1
+/gate/source/addSource I123
+/gate/source/I123/gps/particle gamma
+/gate/source/I123/gps/energytype User
+/gate/source/I123/gps/histname energy
+/gate/source/I123/gps/type Volume
+/gate/source/I123/gps/shape Sphere
+/gate/source/I123/gps/radius 3.91 mm
+/gate/source/I123/setActivity 0.000003 Ci # 3 micro curi
+#/gate/source/I123/setActivity  0.00003  Ci # 30 micro curi
+/gate/source/I123/gps/histpoint 0.027202 0
+/gate/source/I123/gps/histpoint 0.027202 0.04187917
+/gate/source/I123/gps/histpoint 0.027202 0
+/gate/source/I123/gps/histpoint 0.027472 0
+/gate/source/I123/gps/histpoint 0.027472 0.07806277
+/gate/source/I123/gps/histpoint 0.027472 0
+/gate/source/I123/gps/histpoint 0.030944 0
+/gate/source/I123/gps/histpoint 0.030944 0.00705245
+/gate/source/I123/gps/histpoint 0.030944 0
+/gate/source/I123/gps/histpoint 0.030995 0.0135856
+/gate/source/I123/gps/histpoint 0.030995 0
+/gate/source/I123/gps/histpoint 0.15897 0
+/gate/source/I123/gps/histpoint 0.15897 0.83
+/gate/source/I123/gps/histpoint 0.15897 0
+/gate/source/I123/gps/histpoint 0.34635 0
+/gate/source/I123/gps/histpoint 0.34635 0.00126
+/gate/source/I123/gps/histpoint 0.34635 0
+/gate/source/I123/gps/histpoint 0.44002 0
+/gate/source/I123/gps/histpoint 0.44002 0.00428
+/gate/source/I123/gps/histpoint 0.44002 0
+/gate/source/I123/gps/histpoint 0.50533 0
+/gate/source/I123/gps/histpoint 0.50533 0.00316
+/gate/source/I123/gps/histpoint 0.50533 0
+/gate/source/I123/gps/histpoint 0.52896 0
+/gate/source/I123/gps/histpoint 0.52896 0.0139
+/gate/source/I123/gps/histpoint 0.53854 0
+/gate/source/I123/gps/histpoint 0.53854 0.00382
+/gate/source/I123/gps/histpoint 0.53854 0
+
+/gate/source/I123/gps/angtype iso
+/gate/source/I123/dump 1

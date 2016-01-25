@@ -1,0 +1,36 @@
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+
+# axes settings
+/control/alias axesWidth 1
+/control/alias axesLength 100
+ 
+# x-axis
+/gate/world/daughters/name xBox
+/gate/world/daughters/insert box
+/gate/xBox/vis/forceWireframe
+/gate/xBox/vis/setColor red
+/gate/xBox/geometry/setXLength {axesLength} cm
+/gate/xBox/geometry/setYLength {axesWidth} cm
+/gate/xBox/geometry/setZLength {axesWidth} cm
+
+# y-axis
+/gate/world/daughters/name yBox
+/gate/world/daughters/insert box
+/gate/yBox/vis/forceWireframe
+/gate/yBox/vis/setColor green
+/gate/yBox/geometry/setXLength {axesWidth} cm
+/gate/yBox/geometry/setYLength {axesLength} cm
+/gate/yBox/geometry/setZLength {axesWidth} cm
+
+# z-axis
+/gate/world/daughters/name zBox
+/gate/world/daughters/insert box
+/gate/zBox/vis/forceWireframe
+/gate/zBox/vis/setColor blue
+/gate/zBox/geometry/setXLength {axesWidth} cm
+/gate/zBox/geometry/setYLength {axesWidth} cm
+/gate/zBox/geometry/setZLength {axesLength} cm

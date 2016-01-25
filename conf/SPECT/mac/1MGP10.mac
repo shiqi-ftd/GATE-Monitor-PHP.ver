@@ -1,0 +1,89 @@
+#############################################################
+# 1MGP10.mac - 1-MGP-1.0 Pinhole Plate for Inveon SPECT
+#
+# 
+#
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+# 1-MGP-1.0 Specifications
+# Material: Tungsten Alloy 18 (95% W, 3.5 NI. 1,5 Cu)
+# Hole-0: (1) D(mm) = 1.0, k(mm) = 0.40, Angle(degree) = 90
+# 	      d(mm) = 2.5, T(mm) = 15,  FL(mm) = 95
+#             Pinhole location  (0,-25,0)
+#             Pinhole Points to (0,0,0)
+# 
+# consists of
+# 1) hole height = d - (k/2) = 2.5 - 0.2 = 2.3mm
+# 2) keel height = 0.4 mm 
+# 3) hole2 = T - (1) - (2) = 15mm - 2.3mm - 0.4 = 12.3mm
+##############################################################
+# 95 FL pixelated detectors
+# FL = 95mm(distance from pinholeplane to detection plane
+# pixelated NaI(TI)
+##############################################################
+/gate/SPECThead/daughters/name collimator
+/gate/SPECThead/daughters/insert trpd
+/gate/collimator/geometry/setX1Length 9.693 cm #measured - 10-1 cm
+/gate/collimator/geometry/setY1Length 4.6 cm  #4.6
+/gate/collimator/geometry/setZLength 1.5 cm   #1.5
+/gate/collimator/geometry/setX2Length 9.693 cm #measured - 10.1	cm
+/gate/collimator/geometry/setY2Length 7.192 cm #measured - 7.5 cm
+/gate/collimator/geometry/setXBoxLength 0.1 mm
+/gate/collimator/geometry/setYBoxLength 0.1 mm
+/gate/collimator/geometry/setZBoxLength 0.1 mm
+/gate/collimator/placement/setRotationAxis 0 1 0
+/gate/collimator/placement/setRotationAngle 90 deg
+/gate/collimator/setMaterial Tungsten
+/gate/collimator/vis/setColor yellow
+## Collimator Hole #0 
+## 54.50 from the right (96.93)
+## midpoint(x) is 48.465 from the right
+## 54.50 - 48.465 = 6.035
+## 
+/gate/collimator/daughters/name collimatorhole
+/gate/collimator/daughters/insert cone
+/gate/collimatorhole/geometry/setRmax1 2.8 mm ## (2.3 + 2.3 + 1)/2 = 5.6/2=2.8
+/gate/collimatorhole/geometry/setRmax2 0.5 mm # D=1.0mm
+/gate/collimatorhole/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole/geometry/setHeight 2.3 mm #d-(k/2)=2.3
+/gate/collimatorhole/placement/setTranslation -6.035  0 -6.35 mm  #X= move to the center, Z=move out to the front (7.5mm-1.15mm)
+/gate/collimatorhole/setMaterial Air
+/gate/collimatorhole/vis/setColor white
+## Keel 
+## height = 0.40 mm
+## raidus = 0.5 mm (D=1.0 mm)
+/gate/collimator/daughters/name collimatorkeel
+/gate/collimator/daughters/insert cylinder
+/gate/collimatorkeel/geometry/setRmin 0. mm #full solid
+/gate/collimatorkeel/geometry/setRmax 0.50 mm
+/gate/collimatorkeel/geometry/setHeight 0.40 mm
+/gate/collimatorkeel/placement/setTranslation -6.035 0 -5 mm #X= move to the center, Z=move down by (-6.35+1.15+0.2)
+/gate/collimatorkeel/setMaterial Air
+/gate/collimatorkeel/vis/setColor blue
+## bottom half
+/gate/collimator/daughters/name collimatorhole2
+/gate/collimator/daughters/insert cone
+/gate/collimatorhole2/geometry/setRmax1 0.5 mm # D=1.0mm
+/gate/collimatorhole2/geometry/setRmax2 12.8 mm # (12.3 + 1.0 + 12.3)/2 = 12.8mm
+/gate/collimatorhole2/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole2/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole2/geometry/setHeight 12.3 mm # T(15) - hole = 15 - 2.3 -0.4 = 12.3
+/gate/collimatorhole2/placement/setTranslation -6.035 0 1.35 mm #X=move to the center, Z=move down by (-5+0.2+6.15 1.35)
+/gate/collimatorhole2/setMaterial Air
+/gate/collimatorhole2/vis/setColor white
+##make it visible
+/gate/collimatorhole/vis/forceSolid
+/gate/collimatorhole2/vis/forceSolid
+/gate/collimatorkeel/vis/forceSolid
+
+/gate/collimator/placement/setTranslation -92.5 0. -6.035 mm #(X=-100+7.5) Z=6 
+#Collimator is rotated 90 degree around Y-axis.
+#X is the distance from the center of the spectehad to left. It is to align the leftmost spectheadbox with the face of the collimator
+#Z is required to move collimator to the center
+ 
+#pixelated collimator for 1MGP10.mac
+/control/execute ../mac/1MGP10_pixelatedcrystal.mac

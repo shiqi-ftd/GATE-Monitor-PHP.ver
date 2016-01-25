@@ -1,0 +1,63 @@
+#############################################################
+# inveonHousing.mac - SPECT Head Housing for Inveon
+#
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+# SPECTheadHousing - lead
+# Creates a SPECTHead Housing which consists of
+# 1. (exterior+interior) - Lead, 1 cm thick
+# 2. (collimeter mount)  - Tungsten
+# 3. 
+##############################################################
+
+## Housing exterior
+/gate/SPECThead/daughters/name Housing
+/gate/SPECThead/daughters/insert trpd
+/gate/Housing/geometry/setX1Length 11.4 cm  #11.4/2 = 5.7
+/gate/Housing/geometry/setY1Length 7.5 cm #7.5/2 = 3.75
+/gate/Housing/geometry/setZLength 6.6 cm     #8/2 = 4
+/gate/Housing/geometry/setX2Length 23.7 cm   #23.7/2 = 11.85
+/gate/Housing/geometry/setY2Length 20.3 cm   #20.3/2 = 10.15
+/gate/Housing/geometry/setXBoxLength 0.1 mm
+/gate/Housing/geometry/setYBoxLength 0.1 mm
+/gate/Housing/geometry/setZBoxLength 0.1 mm
+/gate/Housing/placement/setRotationAxis 0 1 0
+/gate/Housing/placement/setRotationAngle 90 deg
+/gate/Housing/placement/setTranslation  -57. 0. 0. mm #(-100+33+10)
+/gate/Housing/setMaterial Lead
+/gate/Housing/vis/setColor blue
+## Housing interior
+/gate/Housing/daughters/name HousingInterior
+/gate/Housing/daughters/insert trpd
+/gate/HousingInterior/geometry/setX1Length 10.4 cm  #(11.4-1)/2 = 5.2
+/gate/HousingInterior/geometry/setY1Length 6.5 cm #(7.5-1)/2 = 3.75
+/gate/HousingInterior/geometry/setZLength 5.6 cm     #(6.6-1)/2 = 3.5
+/gate/HousingInterior/geometry/setX2Length 22.7 cm   #(23.7-1)/2 = 11.35
+/gate/HousingInterior/geometry/setY2Length 19.3 cm   #(20.3-1)/2 = 9.65
+/gate/HousingInterior/geometry/setXBoxLength 0.1 mm
+/gate/HousingInterior/geometry/setYBoxLength 0.1 mm
+/gate/HousingInterior/geometry/setZBoxLength 0.1 mm
+/gate/HousingInterior/placement/setTranslation 0. 0. 0.5 cm 
+/gate/HousingInterior/setMaterial Air
+/gate/HousingInterior/vis/setColor red
+## Housing Collimator mount
+#/gate/Housing/daughters/name HousingMount
+#/gate/Housing/daughters/insert box
+#/gate/HousingMount/geometry/setXLength 1.2 cm #1.2
+#/gate/HousingMount/geometry/setYLength 7.5 cm #7.5/2 = 3.75
+#/gate/HousingMount/geometry/setZLength 1.5  cm #1.5
+#/gate/HousingMount/placement/setTranslation -4.95 0. -4.05 cm #(X=5.7-0.75) (Z = 3.3 + 0.75 = 4.05)
+#/gate/HousingMount/setMaterial Tungsten
+#/gate/HousingMount/vis/setColor blue
+## Housing Collimator hole
+/gate/Housing/daughters/name HousingHole
+/gate/Housing/daughters/insert box
+/gate/HousingHole/geometry/setXLength 4.6 cm
+/gate/HousingHole/geometry/setYLength 4.6 cm
+/gate/HousingHole/geometry/setZLength 1 cm
+/gate/HousingHole/placement/setTranslation 0. 0. -2.8 cm # (Z=3.3-0.5)
+/gate/HousingHole/setMaterial Air
+/gate/HousingHole/vis/setColor red

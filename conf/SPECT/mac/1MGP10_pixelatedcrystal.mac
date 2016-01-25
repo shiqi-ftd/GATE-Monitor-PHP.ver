@@ -1,0 +1,92 @@
+###################################################
+# pixelatedcrystal.mac - pixelated crystals
+#
+#
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+
+# Author: Sanghyeb(Sam) Lee (C) slee91@utk.edu
+#
+# Created: 04/02/12
+#
+###################################################
+# Pixelated Nai(TI) Scintillator Crystal
+# Number of crystal material = 4,624(5,184)
+# Crystal element size:   2mm x 2mm x 10mm
+# Crystal element pitch:  2.2mm
+# Inveon has 72x72 crystals but 
+# number of crystal: 68 x 68 = 4624 (right now we ahve 72x72 to make it divisable by 3)
+# FL = 95mm (distance from pinhole to detection plate)
+
+# CRYSTAL Matrix volume
+# Create the crystal volume
+/gate/SPECThead/daughters/name crystal
+/gate/SPECThead/daughters/insert box
+/gate/crystal/geometry/setXLength 10 mm
+/gate/crystal/geometry/setYLength 158.4 mm   #72*2.2=158.4
+/gate/crystal/geometry/setZLength 158.4 mm   #72*2.2=158.4
+/gate/crystal/placement/setTranslation -7.5 0. 0. mm
+/gate/crystal/setMaterial Plastic
+/gate/crystal/vis/setColor white
+
+#Individual Module
+#Each correspond to one PMT
+#there are 3x3 PMT in inveon SPECT
+/gate/crystal/daughters/name module
+/gate/crystal/daughters/insert box
+/gate/module/geometry/setXLength 10. mm
+/gate/module/geometry/setYLength 52.8 mm #2.2*24
+/gate/module/geometry/setZLength 52.8 mm #2.2*24
+/gate/module/setMaterial Plastic
+/gate/module/vis/setColor cyan
+/gate/module/vis/forceWireframe
+/gate/module/repeaters/insert cubicArray
+/gate/module/cubicArray/setRepeatNumberY 3
+/gate/module/cubicArray/setRepeatNumberZ 3
+/gate/module/cubicArray/setRepeatVector 0 52.8 52.8 mm
+
+#Individual crystal
+/gate/module/daughters/name pixel
+/gate/module/daughters/insert box
+/gate/pixel/geometry/setXLength  10. mm #element size = 2mm x 2mm x 10mm
+/gate/pixel/geometry/setYLength  2. mm
+/gate/pixel/geometry/setZLength  2. mm
+/gate/pixel/placement/setTranslation  0. 0. 0. mm # (FL = 95mm, pinhole location from the center is 5mm) the width is 10mm so move 5 more
+/gate/pixel/setMaterial NaI
+/gate/pixel/vis/setColor red
+/gate/pixel/repeaters/insert cubicArray
+/gate/pixel/cubicArray/setRepeatNumberY 24 #72/3 = 24
+/gate/pixel/cubicArray/setRepeatNumberZ 24 #72/3 = 24
+/gate/pixel/cubicArray/setRepeatVector 0 2.2 2.2  mm
+
+
+# BACK-COMPARTMENT
+# Create the back-compartment volume
+##
+/gate/SPECThead/daughters/name compartment
+/gate/SPECThead/daughters/insert box
+/gate/compartment/geometry/setXLength 15 mm 
+/gate/compartment/geometry/setYLength 158.4 mm  # 
+/gate/compartment/geometry/setZLength 158.4 mm  #
+/gate/compartment/placement/setTranslation 5. 0. 0. mm # -7.5 + 5 + 7.5
+/gate/compartment/setMaterial Glass
+/gate/compartment/vis/setColor grey
+
+# Shielding
+# Shielding at the back
+##
+/gate/SPECThead/daughters/name shielding
+/gate/SPECThead/daughters/insert box
+/gate/shielding/geometry/setXLength 15 mm
+/gate/shielding/geometry/setYLength 158.4 mm
+/gate/shielding/geometry/setZLength 158.4 mm
+/gate/shielding/placement/setTranslation 20 0. 0. mm # 5 +7.5 +7.5
+/gate/shielding/setMaterial Lead
+/gate/shielding/vis/setColor magenta
+
+#for DEBUGGING
+#/vis/viewer/zoom 7
+#/vis/viewer/set/viewpointThetaPhi 0 90

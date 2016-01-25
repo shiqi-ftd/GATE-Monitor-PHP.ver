@@ -1,0 +1,31 @@
+#############################################################
+# T99M_digitizer.mac - Inveon SPECT digitizer for T99M
+#
+# Author: Sanghyeb(Sam) Lee (C) slee91@utk.edu
+#
+# Created: 2/28/12
+# 
+#############################################################
+
+# D I G I T I Z E R
+# To simulate the behavior of the scanner detectors and signal processing chain. GATE uses Geant4 to generate particles and transport through the different materials. Tnis mimics the physical interactions between particles and matter. The information generated during this process is used by GATE to simulate the detector pulses (digits)
+####
+
+#Adder sums up all the interaction with one photon within the same volume, and generates one pulse.
+#Energy = sum of all energy deposited by one single photon
+#Location = energy-weighted centroid
+/gate/digitizer/Singles/insert adder
+/gate/digitizer/Singles/insert readout
+/gate/digitizer/Singles/readout/setDepth 2
+/gate/digitizer/Singles/insert blurring
+#energy blurring for T99M
+/gate/digitizer/Singles/blurring/setResolution 0.14
+/gate/digitizer/Singles/blurring/setEnergyOfReference 140. keV
+/gate/digitizer/Singles/insert spblurring
+/gate/digitizer/Singles/spblurring/setSpresolution 2.0 mm
+/gate/digitizer/Singles/spblurring/verbose 0
+#energy thresholds for T99M
+/gate/digitizer/Singles/insert thresholder
+/gate/digitizer/Singles/thresholder/setThreshold 126. keV
+/gate/digitizer/Singles/insert upholder
+/gate/digitizer/Singles/upholder/setUphold 154. keV

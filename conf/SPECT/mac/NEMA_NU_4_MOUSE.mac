@@ -1,0 +1,76 @@
+############################################
+# NEMA_NU_4_MOUSE.mac                      #
+############################################
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+#A 70-mm-long-solid cylinder with 25mm diameter. 
+#A cylindric hole(diameter, 3.2mm) is drilled parallel to the central axis
+# , at a radial of 10mm. 
+# A 11C solution with a concentration higher 
+#than 15,00MBQ/mL was enclosed in a flexible 
+#tube with an outer diameter fitting the 3.2mm hole.
+#Phantom was centered in the FOV#
+# # a line phantom = 60mm
+# Material: Polyethylene(0.96g/cm3) 
+###############################################3
+
+#Main Body
+/gate/world/daughters/name Phantom
+/gate/world/daughters/insert cylinder
+/gate/Phantom/geometry/setRmax 12.5 mm # 25mm/2 
+/gate/Phantom/geometry/setRmin 0. mm   # full cylinder
+/gate/Phantom/geometry/setHeight 70 mm  # 70mm height
+/gate/Phantom/setMaterial Polyethylene
+/gate/Phantom/vis/setColor blue
+
+#a hole
+/gate/Phantom/daughters/name Hole
+/gate/Phantom/daughters/insert cylinder
+/gate/Hole/geometry/setRmax 1.6 mm #3.2/2
+/gate/Hole/geometry/setRmin 0. mm
+/gate/Hole/geometry/setHeight 70 mm
+/gate/Hole/setMaterial Air
+/gate/Hole/vis/setColor white
+/gate/Hole/placement/setTranslation 0 -10 0 mm
+
+#a line phantom filled with water
+/gate/Hole/daughters/name Line
+/gate/Hole/daughters/insert cylinder
+/gate/Line/geometry/setRmax 1.6 mm #3.2/2
+/gate/Line/geometry/setRmin 0. mm
+/gate/Line/geometry/setHeight 60 mm
+/gate/Line/setMaterial Water
+/gate/Line/vis/setColor cyan
+
+#source which will be confined to a hole
+/gate/source/addSource T99M
+# We set the total activity of the source 
+# /gate/source/T99M/setActivity 0.000020 Ci # 20 micro curie
+/gate/source/T99M/setActivity 0.00020 Ci # 200 micro curie
+
+# The particles emitted by the source gammas
+/gate/source/T99M/gps/particle gamma
+
+# The gammas have an energy of 140 keV
+/gate/source/T99M/gps/energytype Mono
+/gate/source/T99M/gps/monoenergy 140 keV
+
+# The source is a full sphere with radius 3.91 mm, located at the centre of the FOV
+/gate/source/T99M/gps/type Volume
+/gate/source/T99M/gps/shape Cylinder
+/gate/source/T99M/gps/radius 1.6 mm #3.2/2
+/gate/source/T99M/gps/centre 0. -10. 0. mm
+/gate/source/T99M/gps/halfz 30 mm  #60mm height
+# The angular distribution of emission angles is isotropic
+/gate/source/T99M/gps/angtype iso
+
+/gate/Phantom/attachPhantomSD
+/gate/Line/attachPhantomSD
+/gate/Hole/attachPhantomSD
+
+
+
+

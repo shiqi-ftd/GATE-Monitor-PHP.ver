@@ -1,0 +1,46 @@
+############################################################
+# I125_sphere.mac - I125 sphere filled with water
+#
+# Author: Sanghyeb(Sam) Lee (C) slee91@utk.edu
+#
+# Created: 4/3/12
+# 
+#############################################################
+# Energy = 122 kev
+# Activity = 20 micro Curie
+#############################################################
+
+
+# I125 source is inside a sphere filled with water!
+/gate/world/daughters/name movsource
+/gate/world/daughters/insert sphere
+/gate/movsource/geometry/setRmax 3.91 mm      #30mm/2
+/gate/movsource/geometry/setRmin 0. mm 
+/gate/movsource/geometry/setPhiStart 0 deg
+/gate/movsource/geometry/setThetaStart 0 deg
+/gate/movsource/geometry/setDeltaPhi 360 deg
+/gate/movsource/geometry/setDeltaTheta 360 deg
+/gate/movsource/setMaterial Water
+/gate/movsource/vis/setColor blue
+/gate/movsource/vis/setVisible true
+
+
+/gate/source/addSource I125
+# We set the total activity of the source
+/gate/source/I125/setActivity 0.000020 Ci
+
+# The particles emitted by the source are gammas
+/gate/source/I125/gps/particle gamma
+
+# The gammas have an energy of 27 keV
+/gate/source/I125/gps/energytype Mono
+/gate/source/I125/gps/monoenergy 27 keV
+
+# The source is a full sphere with radius 3.91 mm, located at the centre of the FOV
+/gate/source/I125/gps/type Volume
+/gate/source/I125/gps/shape Sphere
+/gate/source/I125/gps/radius 3.91 mm
+/gate/source/I125/gps/centre 0. 0. 0. cm
+
+# The angular distribution of emission angles is isotropic
+/gate/source/I125/gps/angtype iso

@@ -1,0 +1,141 @@
+############################################################
+# NEMA-NU4.mac - NEMA NU4 image quality phantom
+#
+# Author: Sanghyeb(Sam) Lee (C) slee91@utk.edu
+#
+# Created: 4/3/12
+# 
+#############################################################
+# The NU 4 IQ phantom (3) is composed of a main phantom body
+# that contains a fillable cylindric chamber 30 mm in diameter and
+# 30 mm in length and a solid part 20 mm in length into which 5
+# fillable rods with diameters of 1, 2, 3, 4, and 5 mm have been
+# drilled. A lid attached to the uniform region of the phantom supports
+# 2 cold-region chambers. These regions are hollow cylinders
+# 15 mm in length and 8 mm in inner diameter with 1-mm wall
+# thickness, to be filled with nonradioactive water and air, respectively.
+#
+#
+# Material: Polyethylene(0.96g/cm3) from knoick's dissertaion. (CHECK IT)
+##############################################################
+
+#MainBody 30mm(mainbody) + 15mm(lid) +20mm(solid) = 65mm 
+/gate/world/daughters/name Phantom
+/gate/world/daughters/insert cylinder
+/gate/Phantom/geometry/setRmax 15. mm      #30mm/2
+/gate/Phantom/geometry/setRmin 0. mm      
+/gate/Phantom/geometry/setHeight 65. mm
+/gate/Phantom/setMaterial Air
+/gate/Phantom/vis/setColor blue
+/gate/Phantom/vis/setVisible false
+
+#mainbody
+/gate/Phantom/daughters/name MainBody
+/gate/Phantom/daughters/insert cylinder
+/gate/MainBody/geometry/setRmax 15. mm
+/gate/MainBody/geometry/setRmin 0. mm
+/gate/MainBody/geometry/setHeight 30 mm
+/gate/MainBody/setMaterial Polyethylene
+/gate/MainBody/vis/setColor blue
+/gate/MainBody/vis/forceSolid
+
+#Lid 15mm
+/gate/Phantom/daughters/name Lid
+/gate/Phantom/daughters/insert cylinder
+/gate/Lid/geometry/setRmax 15. mm
+/gate/Lid/geometry/setRmin 0. mm
+/gate/Lid/geometry/setHeight 15 mm
+/gate/Lid/setMaterial Polyethylene
+/gate/Lid/vis/setColor green
+/gate/Lid/placement/setTranslation 0 0 -22.5 mm #-30/2 - 15/2
+/gate/Lid/vis/forceSolid
+
+#AirHole 8 mm diameter 15mm length
+/gate/Lid/daughters/name AirHole
+/gate/Lid/daughters/insert cylinder
+/gate/AirHole/geometry/setRmax 4. mm #8/2
+/gate/AirHole/geometry/setRmin 0. mm
+/gate/AirHole/geometry/setHeight 15 mm
+/gate/AirHole/setMaterial Air
+/gate/AirHole/vis/setColor white
+/gate/AirHole/placement/setTranslation -7.5 0 0 mm #-30/2 - 15/2
+/gate/AirHole/vis/forceSolid
+
+#AirHole 8 mm diameter 15mm length
+/gate/Lid/daughters/name WaterHole
+/gate/Lid/daughters/insert cylinder
+/gate/WaterHole/geometry/setRmax 4. mm #8/2
+/gate/WaterHole/geometry/setRmin 0. mm
+/gate/WaterHole/geometry/setHeight 15 mm
+/gate/WaterHole/setMaterial Water
+/gate/WaterHole/vis/setColor blue
+/gate/WaterHole/placement/setTranslation 7.5 0 0 mm #-30/2 - 15/2
+/gate/WaterHole/vis/forceSolid
+
+#Solid
+#solid 20mm
+/gate/Phantom/daughters/name Solid
+/gate/Phantom/daughters/insert cylinder
+/gate/Solid/geometry/setRmax 15. mm
+/gate/Solid/geometry/setRmin 0. mm
+/gate/Solid/geometry/setHeight 20 mm
+/gate/Solid/setMaterial Polyethylene
+/gate/Solid/vis/setColor red
+/gate/Solid/vis/forceSolid
+/gate/Solid/placement/setTranslation 0 0 25 mm #30/2 + 10
+
+#rod 1 -1mm diameter
+/gate/Solid/daughters/name rod1
+/gate/Solid/daughters/insert cylinder
+/gate/rod1/geometry/setRmax 0.5 mm
+/gate/rod1/geometry/setRmin 0. mm
+/gate/rod1/geometry/setHeight 20 mm
+/gate/rod1/setMaterial Air
+/gate/rod1/vis/setColor white
+/gate/rod1/vis/forceSolid
+/gate/rod1/placement/setTranslation 10 0 0 mm
+
+#rod 2 -2mm diameter
+/gate/Solid/daughters/name rod2
+/gate/Solid/daughters/insert cylinder
+/gate/rod2/geometry/setRmax 1 mm # 2/2
+/gate/rod2/geometry/setRmin 0. mm
+/gate/rod2/geometry/setHeight 20 mm
+/gate/rod2/setMaterial Air
+/gate/rod2/vis/setColor white
+/gate/rod2/vis/forceSolid
+/gate/rod2/placement/setTranslation 3.0902 9.5106 0 mm #(cosd(72)*10,sind(72)*10
+
+#rod 3 -3mm diameter
+/gate/Solid/daughters/name rod3
+/gate/Solid/daughters/insert cylinder
+/gate/rod3/geometry/setRmax 1.5 mm # 3/2
+/gate/rod3/geometry/setRmin 0. mm
+/gate/rod3/geometry/setHeight 20 mm
+/gate/rod3/setMaterial Air
+/gate/rod3/vis/setColor white
+/gate/rod3/vis/forceSolid
+/gate/rod3/placement/setTranslation -8.0902 5.8778 0 mm 
+
+#rod 4 -4mm diameter
+/gate/Solid/daughters/name rod4
+/gate/Solid/daughters/insert cylinder
+/gate/rod4/geometry/setRmax 2 mm # 4/2
+/gate/rod4/geometry/setRmin 0. mm
+/gate/rod4/geometry/setHeight 20 mm
+/gate/rod4/setMaterial Air
+/gate/rod4/vis/setColor white
+/gate/rod4/vis/forceSolid
+/gate/rod4/placement/setTranslation -5.8778 -8.0902 0 mm 
+
+#rod 5 -5mm diameter
+/gate/Solid/daughters/name rod5
+/gate/Solid/daughters/insert cylinder
+/gate/rod5/geometry/setRmax 2.5 mm # 5/2
+/gate/rod5/geometry/setRmin 0. mm
+/gate/rod5/geometry/setHeight 20 mm
+/gate/rod5/setMaterial Air
+/gate/rod5/vis/setColor white
+/gate/rod5/vis/forceSolid 
+/gate/rod5/placement/setTranslation 3.0902 -9.5106 0 mm
+

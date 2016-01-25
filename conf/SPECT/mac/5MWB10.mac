@@ -1,0 +1,425 @@
+#############################################################
+# 5MWB10.mac - 5-MWB-1.0 Pinhole Plate for Inveon SPECT
+#
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+# 5-MWB-1.0 Specifications
+# Material: Tungsten Alloy 18 (95% W, 3.5 NI. 1,5 Cu)
+# Hole-0: (1) D(mm) = 1.0, k(mm) = 0.40, Angle(degree) = 75
+# 	      d(mm) = 2.5, T(mm) = 10,  FL(mm) = 90
+#             Pinhole location  (0,-30,0)
+#             Pinhole Points to (0,0,0)
+# Hole-1: (1) D(mm) = 1.0, k(mm) = 0.40, Angle(degree) = 75
+# 	      d(mm) = 2.5, T(mm) = 10,  FL(mm) = 90
+#             Pinhole location  (-12,-30,8)
+#             Pinhole Points to (0,0,4)
+# Hole-2: (1) D(mm) = 1.0, k(mm) = 0.40, Angle(degree) = 75
+# 	      d(mm) = 2.5, T(mm) = 10,  FL(mm) = 90
+#             Pinhole location  (7,-30,15)
+#             Pinhole Points to (0,0,7)
+# Hole-3: (1) D(mm) = 1.0, k(mm) = 0.40, Angle(degree) = 75
+# 	      d(mm) = 2.5, T(mm) = 10,  FL(mm) = 90
+#             Pinhole location  (12,-30,-8)
+#             Pinhole Points to (0,0,-4)
+# Hole-4: (1) D(mm) = 1.0, k(mm) = 0.40, Angle(degree) = 75
+# 	      d(mm) = 2.5, T(mm) = 10,  FL(mm) = 90
+#             Pinhole location  (-7,-30,-15)
+#             Pinhole Points to (0,0,-7)
+##############################################################
+# 90 FL pixelated detectors
+# FL = 90mm(distance from pinholeplane to detection plane
+# pixelated NaI(TI)
+##############################################################
+/gate/SPECThead/daughters/name collimator
+/gate/SPECThead/daughters/insert trpd
+/gate/collimator/geometry/setX1Length 9.693 cm #measured - 10.1 cm
+/gate/collimator/geometry/setY1Length 4.6 cm  #measured 5.6
+/gate/collimator/geometry/setZLength 1.0 cm   #1.0
+/gate/collimator/geometry/setX2Length 9.693 cm #measured - 10.1	cm
+/gate/collimator/geometry/setY2Length 7.192 cm #measured - 7.5 cm
+/gate/collimator/geometry/setXBoxLength 0.1 mm
+/gate/collimator/geometry/setYBoxLength 0.1 mm
+/gate/collimator/geometry/setZBoxLength 0.1 mm
+/gate/collimator/placement/setRotationAxis 0 1 0
+/gate/collimator/placement/setRotationAngle 90 deg
+/gate/collimator/setMaterial Tungsten
+/gate/collimator/vis/setColor yellow
+## Collimator Hole #0 
+## 54.50 from the right (96.93)
+## midpoint(x) is 48.465 from the right
+## 54.50 - 48.465 = 6.035
+## 
+/gate/collimator/daughters/name collimatorhole0
+/gate/collimator/daughters/insert box
+/gate/collimatorhole0/geometry/setZLength 10 mm #T(10)
+/gate/collimatorhole0/geometry/setYLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole0/geometry/setXLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole0/setMaterial Tungsten
+/gate/collimatorhole0/vis/setColor yellow
+/gate/collimatorhole0/vis/forceWireframe
+/gate/collimatorhole0/placement/setTranslation -6.035 0 0 mm #X=move to the center
+
+/gate/collimatorhole0/daughters/name collimatorhole0a
+/gate/collimatorhole0/daughters/insert cone
+/gate/collimatorhole0a/geometry/setRmax1 4.0297 mm ## (3.5297 + 3.5297 + 1)/2
+#/gate/collimatorhole0a/geometry/setRmax1 2.2649 mm #(1.7649+1.7649+1)/2 
+#if it was for 2.3. setRmax would be 1.7649+1.7649+1 = 4.5298
+#4.5298/2 = 2.649........ we get 1.7649: a = 2.3/tandd(52.5)
+/gate/collimatorhole0a/geometry/setRmax2 0.5 mm # D=1.0mm
+/gate/collimatorhole0a/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole0a/geometry/setRmin1 0. mm #full solid
+#/gate/collimatorhole0a/geometry/setHeight 2.3 mm #d-(k/2)=2.3 changed to 4.6 to account for cutting off
+/gate/collimatorhole0a/geometry/setHeight 4.6 mm #d-(k/2)=2.3 changed to 4.6 to account for cutting off
+/gate/collimatorhole0a/placement/setTranslation 0  0 -5 mm  #X= move to the center, Z=move out to the front 5mm =  #because we want to have one extra cm sticking out! 
+#/gate/collimatorhole0a/placement/setTranslation 0  0 -3.85 mm ##(5-1.15)
+/gate/collimatorhole0a/setMaterial Air
+/gate/collimatorhole0a/vis/setColor white
+## Keel 
+## height = 0.40 mm
+## raidus = 0.5 mm (D=1.0 mm)
+/gate/collimatorhole0/daughters/name collimatorkeel0k
+/gate/collimatorhole0/daughters/insert cylinder
+/gate/collimatorkeel0k/geometry/setRmin 0. mm #full solid
+/gate/collimatorkeel0k/geometry/setRmax 0.50 mm
+/gate/collimatorkeel0k/geometry/setHeight 0.40 mm
+/gate/collimatorkeel0k/placement/setTranslation 0 0 -2.5 mm #X= move to the center, Z=move down by (-3.85+1.15+0.2)
+/gate/collimatorkeel0k/setMaterial Air
+/gate/collimatorkeel0k/vis/setColor blue
+## bottom half
+/gate/collimatorhole0/daughters/name collimatorhole0b
+/gate/collimatorhole0/daughters/insert cone
+/gate/collimatorhole0b/geometry/setRmax1 0.5 mm # D=1.0mm
+/gate/collimatorhole0b/geometry/setRmax2 9.1708 mm # (8.6708 + 1.0 + 8.6708)/2 
+#/gate/collimatorhole0b/geometry/setRmax2 6.1421 mm # (5.6421 + 5.6421+1.0)/2 = 6.1421 mm
+/gate/collimatorhole0b/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole0b/geometry/setRmin2 0. mm #full solid
+#/gate/collimatorhole0b/geometry/setHeight 7.3 mm # T(10) -2.3-0.4 = 7.3
+/gate/collimatorhole0b/geometry/setHeight 11.3 mm #7.3+2
+#/gate/collimatorhole0b/placement/setTranslation 0 0 1.35 mm #X=move to the center, Z=move down by (-2.5+0.2+3.65)
+/gate/collimatorhole0b/placement/setTranslation 0 0 3.35 mm #X=move to the center, Z=move down by (-2.5+0.2+5.65
+
+/gate/collimatorhole0b/setMaterial Air
+/gate/collimatorhole0b/vis/setColor blue
+##make it visible
+/gate/collimatorhole0a/vis/forceSolid
+/gate/collimatorhole0b/vis/forceSolid
+/gate/collimatorkeel0k/vis/forceSolid
+
+
+# Hole-1: (1) D(mm) = 1.0, k(mm) = 0.40, Angle(degree) = 75
+# 	      d(mm) = 2.5, T(mm) = 10,  FL(mm) = 90
+#             Pinhole location  (-12,-30,8)
+#             Pinhole Points to (0,0,4)
+## Collimator Hole #0 
+## 54.50 from the right (96.93)
+## midpoint(x) is 48.465 from the right
+## 54.50 - 48.465 = 6.035
+## 
+
+## Collimator Hole #1
+## 54.50 from the right (96.93)
+## midpoint(x) is 48.465 from the right
+## 54.50 - 48.465 = 6.035
+## (-12,-30,8) : Y = -12, X = -8  move right by 8 and move down by 12
+## 
+## Points to (0,0,4)
+## directional vector (12,30,-4)
+## unit vector (0.3686,0.9214,-0.1229)
+## directional cosine obtained by performing acosd
+## (68.3721, 22.8621, 97.0571)
+/gate/collimator/daughters/name collimatorhole1r1
+/gate/collimator/daughters/insert box
+/gate/collimatorhole1r1/geometry/setZLength 15 mm #T(10)
+/gate/collimatorhole1r1/geometry/setYLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole1r1/geometry/setXLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole1r1/placement/setTranslation -14.035 -12 -2.5 mm #X=move to the center then move to the right by 8 . move down by 12 and bring it out by 2.5
+#bring it out by 2.5 as we want to rotate it about keel!
+/gate/collimatorhole1r1/daughters/name collimatorhole1
+/gate/collimatorhole1r1/daughters/insert box
+/gate/collimatorhole1/geometry/setZLength 10 mm #T(10)
+/gate/collimatorhole1/geometry/setYLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole1/geometry/setXLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole1/placement/setTranslation 0 0 2.5 mm 
+/gate/collimatorhole1/setMaterial Tungsten
+/gate/collimatorhole1/vis/setColor red
+/gate/collimatorhole1/vis/forceWireframe
+/gate/collimatorhole1r1/vis/setColor blue
+/gate/collimatorhole1r1/vis/forceWireframe
+/gate/collimatorhole1r1/placement/setRotationAxis 1 0 0 
+/gate/collimatorhole1r1/placement/setRotationAngle 21.8014 deg # tan-1(12/30) #rotate down 
+/gate/collimatorhole1/placement/setRotationAxis 0 1 0
+/gate/collimatorhole1/placement/setRotationAngle -7.5946 deg # tan-1(-4/30) -7.5946
+## Upper half
+/gate/collimatorhole1/daughters/name collimatorhole1a
+/gate/collimatorhole1/daughters/insert cone
+/gate/collimatorhole1a/geometry/setRmax1 4.0297 mm 
+/gate/collimatorhole1a/geometry/setRmax2 0.5 mm # D=1.0mm
+/gate/collimatorhole1a/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole1a/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole1a/geometry/setHeight 4.6 mm #d-(k/2)=2.3
+/gate/collimatorhole1a/placement/setTranslation 0  0 -5 mm  
+/gate/collimatorhole1a/setMaterial Air
+/gate/collimatorhole1a/vis/setColor white
+## Keel 
+## height = 0.40 mm
+## raidus = 0.5 mm (D=1.0 mm)
+/gate/collimatorhole1/daughters/name collimatorkeel1k
+/gate/collimatorhole1/daughters/insert cylinder
+/gate/collimatorkeel1k/geometry/setRmin 0. mm #full solid
+/gate/collimatorkeel1k/geometry/setRmax 0.50 mm
+/gate/collimatorkeel1k/geometry/setHeight 0.40 mm
+/gate/collimatorkeel1k/placement/setTranslation 0 0 -2.5 mm #X= move to the center, Z=move down by (-3.85+1.15+0.2)
+/gate/collimatorkeel1k/setMaterial Air
+/gate/collimatorkeel1k/vis/setColor blue
+## bottom half
+/gate/collimatorhole1/daughters/name collimatorhole1b
+/gate/collimatorhole1/daughters/insert cone
+/gate/collimatorhole1b/geometry/setRmax1 0.5 mm # D=1.0mm
+/gate/collimatorhole1b/geometry/setRmax2 9.1708 mm 
+/gate/collimatorhole1b/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole1b/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole1b/geometry/setHeight 11.3 mm 
+/gate/collimatorhole1b/placement/setTranslation 0 0 3.35 mm 
+/gate/collimatorhole1b/setMaterial Air
+/gate/collimatorhole1b/vis/setColor blue
+##make it visible
+/gate/collimatorhole1a/vis/forceSolid
+/gate/collimatorhole1b/vis/forceSolid
+/gate/collimatorkeel1k/vis/forceSolid
+
+
+## Collimator Hole #2
+## 54.50 from the right (96.93)
+## midpoint(x) is 48.465 from the right
+## 54.50 - 48.465 = 6.035
+## (7, 30 ,15) : Y = 7, X = -15 #move up by 7 and move to the right by 15
+## points to (0,0,7)
+/gate/collimator/daughters/name collimatorhole2r1
+/gate/collimator/daughters/insert box
+/gate/collimatorhole2r1/geometry/setZLength 15 mm #T(10)
+/gate/collimatorhole2r1/geometry/setYLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole2r1/geometry/setXLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole2r1/placement/setTranslation -21.0350 7 -2.5 mm #X=move to the center then move to the right by 15 (15+6.0350). move up by 7
+#bring it out by 2.5 as we want to rotate it about keel!
+/gate/collimatorhole2r1/daughters/name collimatorhole2
+/gate/collimatorhole2r1/daughters/insert box
+/gate/collimatorhole2/geometry/setZLength 10 mm #T(10)
+/gate/collimatorhole2/geometry/setYLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole2/geometry/setXLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole2/placement/setTranslation 0 0 2.5 mm 
+/gate/collimatorhole2/setMaterial Tungsten
+/gate/collimatorhole2/vis/setColor blue
+/gate/collimatorhole2/vis/forceWireframe
+/gate/collimatorhole2r1/vis/setColor blue
+/gate/collimatorhole2r1/vis/forceWireframe
+/gate/collimatorhole2r1/placement/setRotationAxis 1 0 0 
+/gate/collimatorhole2r1/placement/setRotationAngle -13.1340 deg # tan-1(7/30)
+/gate/collimatorhole2/placement/setRotationAxis 0 1 0
+/gate/collimatorhole2/placement/setRotationAngle -14.9314 deg # tan-1(8/30) -7.5946
+
+## Upper half
+/gate/collimatorhole2/daughters/name collimatorhole2a
+/gate/collimatorhole2/daughters/insert cone
+/gate/collimatorhole2a/geometry/setRmax1 4.0297 mm ## 
+/gate/collimatorhole2a/geometry/setRmax2 0.5 mm # D=1.0mm
+/gate/collimatorhole2a/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole2a/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole2a/geometry/setHeight 4.6 mm #d-(k/2)=2.3
+/gate/collimatorhole2a/placement/setTranslation 0  0 -5 mm  #X= move to the center, Z=move out to the front (5mm-1.15mm)
+/gate/collimatorhole2a/setMaterial Air
+/gate/collimatorhole2a/vis/setColor white
+## Keel 
+## height = 0.40 mm
+## raidus = 0.5 mm (D=1.0 mm)
+/gate/collimatorhole2/daughters/name collimatorkeel2k
+/gate/collimatorhole2/daughters/insert cylinder
+/gate/collimatorkeel2k/geometry/setRmin 0. mm #full solid
+/gate/collimatorkeel2k/geometry/setRmax 0.50 mm
+/gate/collimatorkeel2k/geometry/setHeight 0.40 mm
+/gate/collimatorkeel2k/placement/setTranslation 0 0 -2.5 mm #X= move to the center, Z=move down by (-3.85+1.15+0.2)
+/gate/collimatorkeel2k/setMaterial Air
+/gate/collimatorkeel2k/vis/setColor blue
+## bottom half
+/gate/collimatorhole2/daughters/name collimatorhole2b
+/gate/collimatorhole2/daughters/insert cone
+/gate/collimatorhole2b/geometry/setRmax1 0.5 mm # D=1.0mm
+/gate/collimatorhole2b/geometry/setRmax2 9.1708 mm 
+/gate/collimatorhole2b/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole2b/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole2b/geometry/setHeight 11.3 mm # T(10) -2.3-0.4 = 7.3
+/gate/collimatorhole2b/placement/setTranslation 0 0 3.35 mm #X=move to the center, Z=move down by (-2.5+0.2+3.65)
+/gate/collimatorhole2b/setMaterial Air
+/gate/collimatorhole2b/vis/setColor blue
+##make it visible
+/gate/collimatorhole2a/vis/forceSolid
+/gate/collimatorhole2b/vis/forceSolid
+/gate/collimatorkeel2k/vis/forceSolid
+
+## Collimator Hole #3
+## 54.50 from the right (96.93)
+## midpoint(x) is 48.465 from the right
+## 54.50 - 48.465 = 6.035
+## (12,-30,-8) : Y = 12, X = -8  move left by 8 and move up by 12
+## 
+## Points to (0,0,-4)
+## directional vector (12,30,-4)
+## unit vector (0.3686,0.9214,-0.1229)
+## directional cosine obtained by performing acosd
+## (68.3721, 22.8621, 97.0571)
+/gate/collimator/daughters/name collimatorhole3r1
+/gate/collimator/daughters/insert box
+/gate/collimatorhole3r1/geometry/setZLength 15 mm #T(10)
+/gate/collimatorhole3r1/geometry/setYLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole3r1/geometry/setXLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole3r1/placement/setTranslation 1.9650 12 -2.5 mm #X=move to the center then move to the left by 8 . move up by 12
+#bring it out by 2.5 as we want to rotate it about keel!
+/gate/collimatorhole3r1/daughters/name collimatorhole3
+/gate/collimatorhole3r1/daughters/insert box
+/gate/collimatorhole3/geometry/setZLength 10 mm #T(10)
+/gate/collimatorhole3/geometry/setYLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole3/geometry/setXLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole3/placement/setTranslation 0 0 2.5 mm 
+/gate/collimatorhole3/setMaterial Tungsten
+/gate/collimatorhole3/vis/setColor blue
+/gate/collimatorhole3/vis/forceWireframe
+/gate/collimatorhole3r1/vis/setColor blue
+/gate/collimatorhole3r1/vis/forceWireframe
+/gate/collimatorhole3r1/placement/setRotationAxis 1 0 0 
+/gate/collimatorhole3r1/placement/setRotationAngle -21.8014 deg # tan-1(-12/30) #rotate down 
+/gate/collimatorhole3/placement/setRotationAxis 0 1 0
+/gate/collimatorhole3/placement/setRotationAngle 7.5946 deg # tan-1(4/30) -7.5946
+
+## Upper Half
+/gate/collimatorhole3/daughters/name collimatorhole3a
+/gate/collimatorhole3/daughters/insert cone
+/gate/collimatorhole3a/geometry/setRmax1 4.0297 mm 
+/gate/collimatorhole3a/geometry/setRmax2 0.5 mm # D=1.0mm
+/gate/collimatorhole3a/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole3a/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole3a/geometry/setHeight 4.6 mm #d-(k/2)=2.3
+/gate/collimatorhole3a/placement/setTranslation 0  0 -5 mm  #X= move to the center, Z=move out to the front (5mm-1.15mm)
+/gate/collimatorhole3a/setMaterial Air
+/gate/collimatorhole3a/vis/setColor white
+## Keel 
+## height = 0.40 mm
+## raidus = 0.5 mm (D=1.0 mm)
+/gate/collimatorhole3/daughters/name collimatorkeel3k
+/gate/collimatorhole3/daughters/insert cylinder
+/gate/collimatorkeel3k/geometry/setRmin 0. mm #full solid
+/gate/collimatorkeel3k/geometry/setRmax 0.50 mm
+/gate/collimatorkeel3k/geometry/setHeight 0.40 mm
+/gate/collimatorkeel3k/placement/setTranslation 0 0 -2.5 mm #X= move to the center, Z=move down by (-3.85+1.15+0.2)
+/gate/collimatorkeel3k/setMaterial Air
+/gate/collimatorkeel3k/vis/setColor blue
+## bottom half
+/gate/collimatorhole3/daughters/name collimatorhole3b
+/gate/collimatorhole3/daughters/insert cone
+/gate/collimatorhole3b/geometry/setRmax1 0.5 mm # D=1.0mm
+/gate/collimatorhole3b/geometry/setRmax2 9.1708 mm 
+/gate/collimatorhole3b/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole3b/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole3b/geometry/setHeight 11.3 mm 
+/gate/collimatorhole3b/placement/setTranslation 0 0 3.35 mm #X=move to the center, Z=move down by (-2.5+0.2+3.65)
+/gate/collimatorhole3b/setMaterial Air
+/gate/collimatorhole3b/vis/setColor blue
+##make it visible
+/gate/collimatorhole3a/vis/forceSolid
+/gate/collimatorhole3b/vis/forceSolid
+/gate/collimatorkeel3k/vis/forceSolid
+
+
+## Collimator Hole #4
+## 54.50 from the right (96.93)
+## midpoint(x) is 48.465 from the right
+## 54.50 - 48.465 = 6.035
+## (-7, 30 ,-15) : Y = -7, X = -15 #move down by 7 and move to the left by 15
+## 
+
+## points to (0,0,-7)
+/gate/collimator/daughters/name collimatorhole4r1
+/gate/collimator/daughters/insert box
+/gate/collimatorhole4r1/geometry/setZLength 15 mm #T(10)
+/gate/collimatorhole4r1/geometry/setYLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole4r1/geometry/setXLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole4r1/placement/setTranslation 8.9650 -7 -2.5 mm #X=move to the center then move to the left by 15 . move down by 7
+#bring it out by 2.5 as we want to rotate it about keel!
+/gate/collimatorhole4r1/daughters/name collimatorhole4
+/gate/collimatorhole4r1/daughters/insert box
+/gate/collimatorhole4/geometry/setZLength 10 mm #T(10)
+/gate/collimatorhole4/geometry/setYLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole4/geometry/setXLength 11.23 mm #diameter of bottom cone
+/gate/collimatorhole4/placement/setTranslation 0 0 2.5 mm 
+/gate/collimatorhole4/setMaterial Tungsten
+/gate/collimatorhole4/vis/setColor blue
+/gate/collimatorhole4/vis/forceWireframe
+/gate/collimatorhole4r1/vis/setColor cyan
+/gate/collimatorhole4r1/vis/forceWireframe
+/gate/collimatorhole4r1/placement/setRotationAxis 1 0 0 
+/gate/collimatorhole4r1/placement/setRotationAngle 13.1340 deg # tan-1(7/30)
+/gate/collimatorhole4/placement/setRotationAxis 0 1 0
+/gate/collimatorhole4/placement/setRotationAngle 14.9314 deg # tan-1(8/30) -7.5946
+
+
+#Upper half
+/gate/collimatorhole4/daughters/name collimatorhole4a
+/gate/collimatorhole4/daughters/insert cone
+/gate/collimatorhole4a/geometry/setRmax1 4.0297 mm ## (1.615 + 1.615 + 1)/2 = 4.23/2 = 2.115
+/gate/collimatorhole4a/geometry/setRmax2 0.5 mm # D=1.0mm
+/gate/collimatorhole4a/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole4a/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole4a/geometry/setHeight 4.6 mm #d-(k/2)=2.3
+/gate/collimatorhole4a/placement/setTranslation 0  0 -5 mm  #X= move to the center, Z=move out to the front (5mm-1.15mm)
+/gate/collimatorhole4a/setMaterial Air
+/gate/collimatorhole4a/vis/setColor white
+## Keel 
+## height = 0.40 mm
+## raidus = 0.5 mm (D=1.0 mm)
+/gate/collimatorhole4/daughters/name collimatorkeel4k
+/gate/collimatorhole4/daughters/insert cylinder
+/gate/collimatorkeel4k/geometry/setRmin 0. mm #full solid
+/gate/collimatorkeel4k/geometry/setRmax 0.50 mm
+/gate/collimatorkeel4k/geometry/setHeight 0.40 mm
+/gate/collimatorkeel4k/placement/setTranslation 0 0 -2.5 mm #X= move to the center, Z=move down by (-3.85+1.15+0.2)
+/gate/collimatorkeel4k/setMaterial Air
+/gate/collimatorkeel4k/vis/setColor blue
+## bottom half
+/gate/collimatorhole4/daughters/name collimatorhole4b
+/gate/collimatorhole4/daughters/insert cone
+/gate/collimatorhole4b/geometry/setRmax1 0.5 mm # D=1.0mm
+/gate/collimatorhole4b/geometry/setRmax2 9.1708 mm # (5.115 + 1.0 + 5.115)/2 = 5.615 mm
+/gate/collimatorhole4b/geometry/setRmin1 0. mm #full solid
+/gate/collimatorhole4b/geometry/setRmin2 0. mm #full solid
+/gate/collimatorhole4b/geometry/setHeight 11.3 mm # T(10) -2.3-0.4 = 7.3
+/gate/collimatorhole4b/placement/setTranslation 0 0 3.35 mm #X=move to the center, Z=move down by (-2.5+0.2+3.65)
+/gate/collimatorhole4b/setMaterial Air
+/gate/collimatorhole4b/vis/setColor blue
+##make it visible
+/gate/collimatorhole4a/vis/forceSolid
+/gate/collimatorhole4b/vis/forceSolid
+/gate/collimatorkeel4k/vis/forceSolid
+
+
+/gate/collimator/placement/setTranslation -95 0. -6.035 mm #(X=-100+5) Z=6 
+#Collimator is rotated 90 degree around Y-axis.
+#X is the distance from the center of the spectehad to left. It is to align the leftmost spectheadbox with the face of the collimator
+#Z is required to move collimator to the center
+
+#visibility
+/gate/collimatorhole4r1/vis/setVisible false
+/gate/collimatorhole3r1/vis/setVisible false
+/gate/collimatorhole2r1/vis/setVisible false
+/gate/collimatorhole1r1/vis/setVisible false
+/gate/collimatorhole0/vis/setVisible false
+/gate/collimatorhole1/vis/setVisible false
+/gate/collimatorhole2/vis/setVisible false
+/gate/collimatorhole3/vis/setVisible false
+/gate/collimatorhole4/vis/setVisible false
+
+
+
+
+#pixelated detectors for 5MWB10 collimator
+/control/execute ../mac/5MWB10_pixelatedcrystal.mac

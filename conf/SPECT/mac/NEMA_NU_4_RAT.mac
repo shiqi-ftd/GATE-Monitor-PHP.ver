@@ -1,0 +1,40 @@
+############################################
+# NEMA_NU_4_RAT.mac                      #
+############################################
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+#A 150-mm-long-solid cylinder with 50mm diameter. 
+#A cylindric hole(diameter, 3.2mm) is drilled parallel to the central axis
+# , at a radial of 17.5mm. 
+# A 11C solution with a concentration higher 
+#than 15,00MBQ/mL was enclosed in a flexible 
+#tube with an outer diameter fitting the 3.2mm hole.
+#Phantom was centered in the FOV#
+#
+# Material: Polyethylene(0.96g/cm3) 
+###############################################
+
+#Main Body
+/gate/world/daughters/name Phantom
+/gate/world/daughters/insert cylinder
+/gate/Phantom/geometry/setRmax 25 mm # 50mm/2 
+/gate/Phantom/geometry/setRmin 0. mm   # full cylinder
+/gate/Phantom/geometry/setHeight 150 mm  # 70mm height
+/gate/Phantom/setMaterial Polyethylene
+/gate/Phantom/vis/setColor blue
+/gate/Phantom/vis/forceSolid
+
+#a hole
+/gate/Phantom/daughters/name Hole
+/gate/Phantom/daughters/insert cylinder
+/gate/Hole/geometry/setRmax 1.6 mm #3.2/2
+/gate/Hole/geometry/setRmin 0. mm
+/gate/Hole/geometry/setHeight 150 mm
+/gate/Hole/setMaterial Air
+/gate/Hole/vis/setColor white
+/gate/Hole/vis/forceSolid
+/gate/Hole/placement/setTranslation 17.5 0 0 mm
+

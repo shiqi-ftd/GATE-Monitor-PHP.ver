@@ -1,0 +1,279 @@
+#############################################################
+# inveon.mac - Inveon SPECT
+#
+# Author: Sanghyeb(Sam) Lee (C) slee91@utk.edu
+#
+# @Date: 12/21/11 
+# @Author: Sanghyeb Lee, Jens Gregor, Dustin Osborne
+# @Reference: Sanghyeb Lee, Jens Gregor, Dustin Osborne, "Initial Validationof a Complete GATE MODEL of the Siemens Inveon Trimodal Imaging System", IEEE, Medical Imaging Conference, Anaheim, CA, Oct 2012
+#
+#############################################################
+
+#SPECTHead position - determines ROR
+#Need to change this
+
+# V I S U A L I S A T I O N
+#####
+#/vis/disable
+#/control/execute vis.mac
+
+# M A N D A T O R Y
+#####
+/gate/geometry/setMaterialDatabase ../data/GateMaterials.db
+
+# D E B U G I N G
+#
+#/control/execute axis.mac
+
+
+# G E O M E T R Y
+#####
+
+# World
+# Define the world dimensions
+##
+/gate/world/geometry/setXLength 70 cm
+/gate/world/geometry/setYLength 70 cm
+/gate/world/geometry/setZLength 70 cm
+
+# Scanner Head
+# Create a new box representing the main head-volume
+
+# SPECThead is the name of the predefined SPECT system
+# Create the SPECT system, which will yield an Interfile output of projection data
+##
+/gate/world/daughters/name SPECThead
+/gate/world/daughters/insert box
+/gate/SPECThead/geometry/setXLength 20 cm #8/2=4 previous 9.5
+/gate/SPECThead/geometry/setYLength 20.3 cm #20.3/2=10.15
+/gate/SPECThead/geometry/setZLength 23.7 cm #23.7/2
+
+# This is ROR(25mm) for 1MGP10 collimator
+# ROR(25mm) - d(2.5mm) = 23.5mm
+#/gate/SPECThead/placement/setTranslation  123.5 0. 0. mm # 23.5 mm + 100m = 123.5 mm 
+
+# This is ROR(30mm) for 5MWB10 collimator
+# ROR(30mm) - d(2.5mm) = 27.5mm
+/gate/SPECThead/placement/setTranslation  127.5 0. 0. mm # 27.5 mm + 100m = 127.5 mm
+
+# This is ROR(360mm) for flood image
+# ROR(360mm) - d(2.5mm) = 357.5 mm
+#/gate/SPECThead/placement/setTranslation 457.5 0. 0. mm # (360mm-2.5) = 357.5 mm + 100m
+
+/gate/SPECThead/setMaterial Air
+/gate/SPECThead/repeaters/insert ring
+/gate/SPECThead/ring/setRepeatNumber 2
+/gate/SPECThead/vis/forceWireframe
+#/gate/SPECThead/vis/setVisible false
+
+# SPECTheadHousing - lead
+# Creates a SPECTHead Housing which consists of
+# 1. (exterior+interior) - Lead, 1 cm thick
+# 2. (collimeter mount)  - Tungsten
+/control/execute ../mac/1MGP10_inveonHousing.mac
+#/control/execute ../mac/5MWB10_inveonHousing.mac
+#/control/execute ../mac/1MHR05_inveonHousing.mac
+#/control/execute ../mac/1MME30_inveonHousing.mac
+
+# Collimator
+# Choose which Collimator you want to use
+/control/execute ../mac/1MGP10.mac
+#/control/execute ../mac/5MWB10.mac
+#/control/execute ../mac/1MHR05.mac
+#/control/execute ../mac/1MME30.mac
+
+# Pixelated Detectors
+# It is now part of the collimator macro.
+# Do not include the below macro. It is for debugging and flood image only
+#/control/execute ../mac/pixelatedcrystal.mac
+
+# PHANTOM
+# Create the phantom volume
+##
+# size 2.464cm x 2.464cm x 5.9136 (320x320x768) -- this is used
+/gate/world/daughters/name Phantom
+/gate/world/daughters/insert box
+/gate/Phantom/geometry/setXLength 2.5 cm 
+/gate/Phantom/geometry/setYLength 2.5 cm
+/gate/Phantom/geometry/setZLength 6 cm
+/gate/Phantom/moves/insert orbiting
+/gate/Phantom/orbiting/setSpeed 0.266667 deg/s #12degree/45s
+/gate/Phantom/orbiting/setPoint1 0 0 0 cm
+/gate/Phantom/orbiting/setPoint2 0 0 1 cm
+
+#/control/execute ../mac/voxelized_mouse.mac
+
+
+# D E F I N E  T H E  S O U R C E
+#####
+##### defining COBALT57 point source
+#/control/execute ../mac/COBALT57_point.mac
+#/control/execute ../mac/T99M_sphere.mac
+#/control/execute ../mac/I125_sphere.mac
+#/control/execute ../mac/voxelized_spleen.mac
+/control/execute ../mac/voxelized_calibration.mac
+
+#  S Y S T E M
+######
+# The system acts as an interpretor between the GATE geometry and data outputs for reconstruction 
+# in our case, the Interfile writer
+# A system must know which components of the geometry are parts of the scanner, and what 
+# their role are.
+# For the moment, there is only a system SPECThead, which was built when the SPECThead volume
+# was inserted. 
+# The SPECThead system is made of three levels: base (for the head), crystal (for the crystal and crystal matrix) 
+# and pixel (for individual crystals for pixellated gamma camera)
+# For now, only the base of the system is attached to a volume: the volume SPECThead
+# For the system to get information about your crystal, the level crystal must be attached to the volume 
+# that has been defined for the scintillating crystal (crystal)
+##
+
+/gate/systems/SPECThead/crystal/attach module
+/gate/systems/SPECThead/pixel/attach pixel
+/gate/systems/SPECThead/describe 
+
+
+# S E N S I T I V E   D E T E C T O R S
+######
+# GATE provides two sensitive detectors, which have two different functions
+# Using them properly is very important for getting accurate results
+##
+
+# Crystal SD
+#
+# The crystal SD makes it possible to record hits in a sensitive volume (e.g.,. in a scintillation crystal)
+# It must be attached to any volume for which hit-data must be obtained
+# For recording hits in the NaI volume only, the name of which is crystal, this volume is attached 
+# to the crystal SD
+##
+
+#/gate/crystal/attachCrystalSD
+/gate/pixel/attachCrystalSD
+
+# Phantom SD
+#
+# The phantom SD makes it possible to record Compton events in the volumes within the field of view
+# This can provide information for result analysis to discriminate between 
+# scattered and unscattered photons
+# It must be attached to each and every volume for whom Compton interactions have to be recorded
+##
+
+#/gate/movsource/attachPhantomSD
+/gate/compartment/attachPhantomSD
+/gate/shielding/attachPhantomSD
+/gate/SPECThead/attachPhantomSD
+/gate/collimator/attachPhantomSD
+/gate/Housing/attachPhantomSD
+/gate/HousingInterior/attachPhantomSD
+
+#  P H Y S I C S
+#####
+/gate/physics/addProcess PhotoElectric
+/gate/physics/processes/PhotoElectric/setModel StandardModel
+
+/gate/physics/addProcess Compton
+/gate/physics/processes/Compton/setModel PenelopeModel
+
+/gate/physics/addProcess RayleighScattering
+/gate/physics/processes/RayleighScattering/setModel PenelopeModel
+
+/gate/physics/addProcess ElectronIonisation
+/gate/physics/processes/ElectronIonisation/setModel StandardModel e-
+
+/gate/physics/addProcess Bremsstrahlung
+/gate/physics/processes/Bremsstrahlung/setModel StandardModel e-
+
+/gate/physics/addProcess MultipleScattering e-
+
+/gate/physics/processList Enabled
+/gate/physics/processList Initialized
+
+
+# I N I T I A L I Z A T I O N
+#####
+
+/gate/run/initialize
+
+
+# Show how the geometry moves with time
+# ! After the initialization !
+##
+#/vis/viewer/zoom 3
+#/control/execute ../mac/MoveVisu.mac
+
+#confine the source only needed for T99 & I-125
+/gate/source/voxel/attachTo Phantom
+
+# D I G I T I Z E R
+#/control/execute ../mac/digitizer.mac
+#/control/execute ../mac/T99M_digitizer.mac
+#/control/execute ../mac/I125_digitizer.mac
+/control/execute ../mac/COBALT57_digitizer.mac
+
+# O U T P U T
+#####
+
+/gate/output/root/disable
+/gate/output/root/setFileName /home/slee91/SPECT/run_calibration_1MGP10_ROR30_CO57
+/gate/output/root/setRootSinglesAdderFlag 0
+/gate/output/root/setRootSinglesBlurringFlag 0
+/gate/output/root/setRootSinglesThresholderFlag 0
+/gate/output/root/setRootSinglesUpholderFlag 0
+
+#ascii
+/gate/output/ascii/enable
+/gate/output/ascii/setFileName /home/slee91/SPECT/run_calibration_1MGP10_ROR30_CO57
+/gate/output/ascii/setOutFileSinglesAdderFlag 0
+/gate/output/ascii/setOutFileSinglesBlurringFlag 1
+/gate/output/ascii/setOutFileSinglesThresholderFlag 0
+/gate/output/ascii/setOutFileSinglesUpholderFlag 0
+/gate/output/ascii/setOutFileSinglesFlag 1
+
+
+#   R A N D O M
+# JamesRandom Ranlux64 MersenneTwister
+/gate/random/setEngineName MersenneTwister
+#/gate/random/setEngineSeed default
+/gate/random/setEngineSeed auto
+#/gate/random/setEngineSeed 123456789
+#/gate/random/resetEngineFrom fileName
+/gate/random/verbose 1
+
+
+
+# P R O J E C T I O N
+#####
+/gate/output/projection/enable
+/gate/output/projection/setFileName /home/slee91/SPECT/run_calibration_1MGP10_ROR30_CO57
+/gate/output/projection/pixelSizeX 2 mm
+/gate/output/projection/pixelSizeY 2 mm
+/gate/output/projection/pixelNumberX 72
+/gate/output/projection/pixelNumberY 72
+
+# Specify the projection plane (XY, YZ or ZX)
+##
+/gate/output/projection/projectionPlane YZ
+
+
+
+# E X P E R I M E N T 
+#####
+#/gate/application/setTotalNumberOfPrimaries 666000000 #900 * 740000
+/gate/application/setTimeSlice      45  s #45 per projection
+/gate/application/setTimeStart     0   s
+/gate/application/setTimeStop      1350 s #22.5 minutes
+
+
+# V E R B O S I T Y
+#####
+
+/control/execute ../mac/Verbose.mac
+
+# L E T' S   R U N   T H E   S I M U L A T I O N  !
+#####
+/gate/application/startDAQ
+
+#for showing 5 pinehole
+
+#/vis/viewer/set/viewpointThetaPhi 270 0
+#/vis/viewer/set/viewpointThetaPhi 180 30

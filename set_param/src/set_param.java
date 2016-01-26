@@ -5,7 +5,7 @@
  * The new macro conf file will be generated based on the input.
  * By Shiqi Zhong
  * Start: 7/13/2015
- * Last Update: 1/24/2016
+ * Last Update: 1/25/2016
  */
 
 import java.io.*;
@@ -150,7 +150,7 @@ public class set_param {
 			}
 			}
 		}
-//		System.out.println(counter);
+		System.out.println(counter);
 		System.out.println(output);
 
 		file.close();
@@ -174,36 +174,42 @@ public class set_param {
 		wf.close();
 	}
 	
+	// Usage Example:
+	// java -jar set_param.jar SPECT,Isotope,I123_digitizer_HI /Users/ShiqiZhong/Documents/GATE-Monitor/GATE-Interactive-Monitor/
+	
 	public static void main(String args[]) {
 		try {
 			// System.out.println(System.getProperty("user.dir"));
 			String cmd;
-			if (args.length > 1) {
-				cmd = args[0].toString() + " " + args[1].toString();
-			} else {
-				cmd = args[0].toString();
-			}
-			
-			System.out.println(cmd);
+//			if (args.length > 1) {
+//				cmd = args[0].toString() + " " + args[1].toString();
+//			} else {
+//				cmd = args[0].toString();
+//			}
+			// Be careful if the cmd contains spaces!
+			// If not, then it's fine
+			cmd = args[0].toString();
+//			System.out.println(cmd);
 
 			String[] params = cmd.split(",");
 			
-			String path = "/Users/ShiqiZhong/Documents/GATE-Monitor/GATE-Interactive-Monitor/";
-			
+//			String path = "/Users/ShiqiZhong/Documents/GATE-Monitor/GATE-Interactive-Monitor/";
+			String path = args[1];
+//			System.out.println(cmd);
+//			System.out.println(path);
 			set_param sp = new set_param(params, path);
+			
 			sp.set_conf(sp);
 			/*
 			 * System.out.print(System.getProperty("user.dir") + '\\' +
 			 * "WebContent\\conf" + '\\' + sp.type + '\\' +
 			 * "configuration.mac");
 			 */
-			
 			// Test Arguments: 
 			// SPECT,Radius_of_rotation,360
 			// SPECT,Collimator_type,1MGP10.mac
 			// SPECT,Radius_of_rotation,360
 		} catch (Exception e) {
 		}
-
 	}
 }

@@ -1,0 +1,19 @@
+install apache2  need sudo for start/stop
+
+set up java environment in Ubuntu machine
+
+set the path to jar file(Two places) in php 
+
+
+（no need）
+set visudo:
+%admin ALL=(ALL) NOPASSWD: /usr/bin/java -jar /var/www/html/set_param.jar
+
+bug fixed on value/text for simulation.php
+minor naming bug for 5MB10
+
+specify full path for the java!
+
+use absolute path in mac file
+
+165.6.23.102

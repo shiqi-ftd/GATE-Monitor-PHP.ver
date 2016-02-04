@@ -5,7 +5,7 @@
  * The new macro conf file will be generated based on the input.
  * By Shiqi Zhong
  * Start: 7/13/2015
- * Last Update: 1/25/2016
+ * Last Update: 2/3/2016
  */
 
 import java.io.*;
@@ -16,6 +16,7 @@ public class set_param {
 	String type;
 	String parm;
 	String value;
+	String value_extra;
 	String path;
 	
 	List<String> tags = new ArrayList<String>();
@@ -24,20 +25,28 @@ public class set_param {
 		type = params[0];
 		parm = params[1];
 		value = params[2];
+		value_extra = params[3];
 		path=pathtofile;
 	}
 	
 	public void set_tags(set_param sp){
 		if(sp.type.equals("SPECT") && sp.parm.equals("Collimator_type")){
-			tags.add("# Collimator");
 			tags.add("# Housing");
+			tags.add("# Collimator");			
 		}
 		if(sp.type.equals("SPECT") && sp.parm.equals("Radius_of_rotation")){
+			tags.add("# ROR_Alias");
 			tags.add("# ROR");
 		}
 		if(sp.type.equals("SPECT") && sp.parm.equals("Isotope")){
 			tags.add("# Isotope");
 		}
+		if(sp.type.equals("SPECT") && sp.parm.equals("ProjectionAndTime")){
+			tags.add("# setSpeed");
+			tags.add("# setTimeSlice");
+			tags.add("# setTimeStop");
+		}
+		
 	}
 	
 	public ArrayList<String> get_config(set_param sp){
@@ -67,12 +76,15 @@ public class set_param {
 		if(sp.type.equals("SPECT") && sp.parm.equals("Radius_of_rotation")){
 			switch (Integer.parseInt(sp.value)){
 			case 25:
+				new_config.add("/control/alias ROR 25 mm");
 				new_config.add("/gate/SPECThead/placement/setTranslation 123.5 0. 0. mm");
 				break;
 			case 30:
+				new_config.add("/control/alias ROR 30 mm");				
 				new_config.add("/gate/SPECThead/placement/setTranslation  127.5 0. 0. mm");
 				break;
 			case 360:
+				new_config.add("/control/alias ROR 360 mm");								
 				new_config.add("/gate/SPECThead/placement/setTranslation 457.5 0. 0. mm");
 				break;
             default: new_config.add("Invalid Params for Radius_of_rotation");
@@ -101,7 +113,18 @@ public class set_param {
             break;
 		}
 		}
-		
+		if(sp.type.equals("SPECT") && sp.parm.equals("ProjectionAndTime")){
+			int projection = Integer.parseInt(sp.value);
+			int time = Integer.parseInt(sp.value_extra);
+			
+			double speed = 360/(Double.parseDouble(sp.value) * Double.parseDouble(sp.value_extra));
+			java.text.DecimalFormat df = new java.text.DecimalFormat(".0000000");
+			String format_speed = df.format(speed);
+			
+			new_config.add("/gate/SPECThead/orbiting/setSpeed " + format_speed + " deg/s");
+			new_config.add("/gate/application/setTimeSlice " + time + " s");
+			new_config.add("/gate/application/setTimeStop " + time*projection/2 + " s");
+		}
 		return new_config;
 	}
 
@@ -177,6 +200,9 @@ public class set_param {
 	// Usage Example:
 	// java -jar set_param.jar SPECT,Isotope,I123_digitizer_HI /Users/ShiqiZhong/Documents/GATE-Monitor/GATE-Interactive-Monitor/
 	
+	// Test for P&T
+	// SPECT,ProjectionAndTime,60,45 /Users/ShiqiZhong/Documents/GATE-Monitor/GATE-Interactive-Monitor/
+	
 	public static void main(String args[]) {
 		try {
 			// System.out.println(System.getProperty("user.dir"));
@@ -195,7 +221,7 @@ public class set_param {
 			
 //			String path = "/Users/ShiqiZhong/Documents/GATE-Monitor/GATE-Interactive-Monitor/";
 			String path = args[1];
-//			System.out.println(cmd);
+			System.out.println(cmd);
 //			System.out.println(path);
 			set_param sp = new set_param(params, path);
 			

@@ -57,7 +57,7 @@
 #/gate/SPECThead/orbiting/setSpeed 12 deg/s #0.12
 
 # setSpeed
-/gate/SPECThead/orbiting/setSpeed .2666667 deg/s
+/gate/SPECThead/orbiting/setSpeed 12 deg/s 
 
 
 #/gate/SPECThead/orbiting/setPoint1 0 0 0 cm
@@ -213,10 +213,10 @@
 #/gate/application/setTotalNumberOfPrimaries 666000000 #900 * 740000
 
 # setTimeSlice
-/gate/application/setTimeSlice 45 s
+/gate/application/setTimeSlice      60  s #10 minutes
 /gate/application/setTimeStart      0    s
 # setTimeStop
-/gate/application/setTimeStop 675 s
+/gate/application/setTimeStop      60 s #60 * 10 seconds 
 
 
 # V E R B O S I T Y

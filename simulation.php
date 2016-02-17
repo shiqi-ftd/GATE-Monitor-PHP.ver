@@ -117,7 +117,7 @@ if (strcmp ( $_SESSION ['login'], 'in' ) != 0) {
 			<p>
 				Acquisition Time: <select id ="Time" name="ProjectionAndTime"
 					onclick="send_parameter('#ProjectionAndTime')">
-					<option value="0">0</option>
+					<option value="0"></option>
 					<option value="1">30</option>
 					<option value="2">45</option>
 					<option value="2">60</option>

@@ -189,7 +189,7 @@
 #####
 
 /gate/output/root/enable
-/gate/output/root/setFileName test_5MWB10
+/gate/output/root/setFileName Simu024
 /gate/output/root/setRootSinglesAdderFlag 1
 /gate/output/root/setRootSinglesBlurringFlag 1 
 /gate/output/root/setRootSinglesSpblurringFlag 1
@@ -214,9 +214,9 @@
 
 # setTimeSlice
 /gate/application/setTimeSlice 45 s
-/gate/application/setTimeStart      0    s
-# setTimeStop
-/gate/application/setTimeStop 1350 s
+/gate/application/setTimeSlice 45 s
+/gate/application/setTimeStart 1080 s
+/gate/application/setTimeStop 1125 s
 
 # V E R B O S I T Y
 #####

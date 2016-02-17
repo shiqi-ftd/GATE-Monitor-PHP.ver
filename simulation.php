@@ -107,12 +107,23 @@ if (strcmp ( $_SESSION ['login'], 'in' ) != 0) {
 			</p>
 
 			<p>
-				Number of Projections: <select id="Projections"
-					onclick="send_parameter('#Projections')">
+				Number of Projections: <select id ="Projection" name="ProjectionAndTime"
+					onclick="send_parameter('#ProjectionAndTime')">
 					<option value="0"></option>
-					<option value="1">60</option>
+					<option value="1">30</option>					
+					<option value="2">60</option>
 				</select>
 			</p>
+			<p>
+				Acquisition Time: <select id ="Time" name="ProjectionAndTime"
+					onclick="send_parameter('#ProjectionAndTime')">
+					<option value="0">0</option>
+					<option value="1">30</option>
+					<option value="2">45</option>
+					<option value="2">60</option>
+				</select>
+			</p>
+			
 			<p>
 		
 		</div>
@@ -166,11 +177,27 @@ if (strcmp ( $_SESSION ['login'], 'in' ) != 0) {
 			//alert($("#choose_paramter:parent"));
 			//alert(type + "," + name +"," + text);
 			var cmd = type + "," + name + "," + text;
-			$.post("updateconf.php", {
-				command : cmd
-			}, function(data) {
-				//alert("Data Sent: " + data);
-			});
+			if(name != "Projection" && type != "Time"){
+				$.post("updateconf.php", {
+					command : cmd
+				}, function(data) {
+					//alert("Data Sent: " + data);
+				});
+			}else{
+				// for projections and time, only when both two are specified, send cmd
+				var a = document.getElementById("Projection");
+				var b = document.getElementById("Time");
+				var projection = a.options[a.selectedIndex].text;
+				var time = b.options[b.selectedIndex].text;
+				if(projection != "" && time !=""){
+				var cmd = type + "," + "ProjectionAndTime" + "," + projection + "," + time;
+				$.post("updateconf.php", {
+					command : cmd
+				}, function(data) {
+					//alert("Data Sent: " + data);
+				});
+				}
+			}
 		}
 
 		function simu_start() {

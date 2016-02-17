@@ -214,7 +214,6 @@
 
 # setTimeSlice
 /gate/application/setTimeSlice 45 s
-/gate/application/setTimeSlice 45 s
 /gate/application/setTimeStart 1305 s
 /gate/application/setTimeStop 1350 s
 

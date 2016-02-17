@@ -4,15 +4,14 @@
  * By Default, split the simulation to 64 cores.
  * Usage: java -jar split.jar path_to_GATE_project number_of_cores(optional)
  * By Shiqi Zhong
- * Start: 7/13/2015
- * Last Update: 1/24/2016
+ * Start: 2/16/2016
+ * Last Update: 2/16/2016
  */
 
 package split;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -87,7 +86,6 @@ public class split {
 			String output = part0;
 			output = output + "/gate/output/root/setFileName " + "Simu" + fileindex + '\n';
 			output = output + part1;
-			output = output + "/gate/application/setTimeSlice " + slice + " s" + '\n';
 			output = output + "/gate/application/setTimeSlice " + slice + " s" + '\n';
 			output = output + "/gate/application/setTimeStart " + slice*i + " s" + '\n';
 			output = output + "/gate/application/setTimeStop " + slice*(i+1) + " s" + '\n';

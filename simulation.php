@@ -78,10 +78,10 @@ if (strcmp ( $_SESSION ['login'], 'in' ) != 0) {
 				Collimator type: <select id="Collimator_type"
 					onclick="send_parameter('#Collimator_type')">
 					<option value="0"></option>
-					<option value="1MGP10.mac">1-MGP-1.0</option>
-					<option value="5MWB.mac">5-MWB-1.0</option>
-					<option value="1MHR05.mac">1-MHR-0.5</option>
-					<option value="1MME30.mac">1-MME-3.0</option>
+					<option value="1MGP10.mac">1MGP10.mac</option>
+					<option value="5MWB.mac">5MWB.mac</option>
+					<option value="1MHR05.mac">1MHR05.mac</option>
+					<option value="1MME30.mac">1MME30.mac</option>
 				</select>
 			</p>
 
@@ -89,9 +89,9 @@ if (strcmp ( $_SESSION ['login'], 'in' ) != 0) {
 				Radius of rotation: <select id="Radius_of_rotation"
 					onclick="send_parameter('#Radius_of_rotation')">
 					<option value="0"></option>
-					<option value="25">25 mm</option>
-					<option value="30">30 mm</option>
-					<option value="360">360 mm</option>
+					<option value="25">25</option>
+					<option value="30">30</option>
+					<option value="360">360</option>
 				</select>
 			</p>
 

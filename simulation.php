@@ -108,7 +108,7 @@ if (strcmp ( $_SESSION ['login'], 'in' ) != 0) {
 
 			<p>
 				Number of Projections: <select id ="Projection" name="ProjectionAndTime"
-					onclick="send_parameter('#ProjectionAndTime')">
+					onclick="send_parameter('#Projection')">
 					<option value="0"></option>
 					<option value="1">30</option>					
 					<option value="2">60</option>
@@ -116,7 +116,7 @@ if (strcmp ( $_SESSION ['login'], 'in' ) != 0) {
 			</p>
 			<p>
 				Acquisition Time: <select id ="Time" name="ProjectionAndTime"
-					onclick="send_parameter('#ProjectionAndTime')">
+					onclick="send_parameter('#Time')">
 					<option value="0"></option>
 					<option value="1">30</option>
 					<option value="2">45</option>
@@ -177,7 +177,7 @@ if (strcmp ( $_SESSION ['login'], 'in' ) != 0) {
 			//alert($("#choose_paramter:parent"));
 			//alert(type + "," + name +"," + text);
 			var cmd = type + "," + name + "," + text;
-			if(name != "Projection" && type != "Time"){
+			if(name != "Projection" && name != "Time"){
 				$.post("updateconf.php", {
 					command : cmd
 				}, function(data) {

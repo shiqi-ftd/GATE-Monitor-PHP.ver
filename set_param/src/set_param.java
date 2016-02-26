@@ -5,7 +5,7 @@
  * The new macro conf file will be generated based on the input.
  * By Shiqi Zhong
  * Start: 7/13/2015
- * Last Update: 2/3/2016
+ * Last Update: 2/26/2016
  */
 
 import java.io.*;
@@ -25,7 +25,9 @@ public class set_param {
 		type = params[0];
 		parm = params[1];
 		value = params[2];
-		value_extra = params[3];
+		if(params.length >= 4){
+			value_extra = params[3];
+		}
 		path=pathtofile;
 	}
 	
@@ -59,7 +61,7 @@ public class set_param {
 					break;
 				case "1MHR05.mac":
 					new_config.add("/control/execute 1MHR05_inveonHousing.mac");
-					new_config.add("/control/execute ../mac/1MGP05.mac");
+					new_config.add("/control/execute ../mac/1MHR05.mac");
 					break;
 				case "1MME30.mac":
 					new_config.add("/control/execute 1MME30_inveonHousing.mac");

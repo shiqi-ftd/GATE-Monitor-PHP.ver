@@ -5,7 +5,7 @@
  * Usage: java -jar split.jar path_to_GATE_project number_of_cores(optional)
  * By Shiqi Zhong
  * Start: 2/16/2016
- * Last Update: 2/16/2016
+ * Last Update: 3/10/2016
  */
 
 package split;
@@ -93,10 +93,28 @@ public class split {
 			FileWriter wf = new FileWriter(cf, false);			
 			wf.write(output);
 			wf.close();
+			
+			// Generate the related scripts
+			File sf = new File(pathW + "/conf/SPECT/mac/script_" + fileindex + ".sh");
+			String shell = "cd " + pathW + "/conf/SPECT/mac/";
+			shell = shell + '\n' + "nice -n 1 Gate " + pathW + "/conf/SPECT/mac/SPECT" + 
+			fileindex + ".mac &" + '\n' + "disown -h";
+			FileWriter wsf = new FileWriter(sf, false);			
+			wsf.write(shell);
+			wsf.close();
 		}
-
+		// Generate the execute sh
+		File ex = new File(pathW + "/conf/SPECT/mac/execute.sh");
+		String exShell = "#!/bin/bash" + '\n';
+		exShell = exShell + "let count = " + num + '\n';
+		exShell = exShell + "echo $count" + '\n' + "for i in {000..029}" + '\n'
+				+ "do" + '\n' + " taskset -c $count ./script_$i.sh 42800" + '\n'
+				+ " sleep 10s" + '\n' + "let count=1+count" + '\n' + "echo $count"
+				+ '\n' + '\n' + "done";
+		FileWriter exwf = new FileWriter(ex, false);			
+		exwf.write(exShell);
+		exwf.close();
 	}
-	
 	
 	public static void main(String args[]) throws IOException {
 		String path = "";

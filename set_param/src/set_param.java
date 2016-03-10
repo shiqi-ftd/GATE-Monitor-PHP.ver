@@ -5,7 +5,7 @@
  * The new macro conf file will be generated based on the input.
  * By Shiqi Zhong
  * Start: 7/13/2015
- * Last Update: 2/26/2016
+ * Last Update: 3/10/2016
  */
 
 import java.io.*;
@@ -48,7 +48,9 @@ public class set_param {
 			tags.add("# setTimeSlice");
 			tags.add("# setTimeStop");
 		}
-		
+		if(sp.type.equals("SPECT") && sp.parm.equals("Object")){
+			tags.add("# Object");
+		}		
 	}
 	
 	public ArrayList<String> get_config(set_param sp){
@@ -56,7 +58,7 @@ public class set_param {
 		if(sp.type.equals("SPECT") && sp.parm.equals("Collimator_type")){
 			switch (sp.value){
 				case "1MGP10.mac":
-					new_config.add("/control/execute 1MGP10_inveonhousing.mac");
+					new_config.add("/control/execute 1MGP10_inveonHousing.mac");
 					new_config.add("/control/execute ../mac/1MGP10.mac");
 					break;
 				case "1MHR05.mac":
@@ -127,6 +129,11 @@ public class set_param {
 			new_config.add("/gate/application/setTimeSlice " + time + " s");
 			new_config.add("/gate/application/setTimeStop " + time*projection/2 + " s");
 		}
+		if(sp.type.equals("SPECT") && sp.parm.equals("Object")){
+			new_config.add("/control/execute ../mac/" + sp.value);
+		}
+		
+		
 		return new_config;
 	}
 

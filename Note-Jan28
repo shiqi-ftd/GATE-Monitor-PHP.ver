@@ -21,3 +21,7 @@ use absolute path in mac file
 2/16
 Account:
 .\MIL
+
+
+2/26
+The sh is ran by www-data

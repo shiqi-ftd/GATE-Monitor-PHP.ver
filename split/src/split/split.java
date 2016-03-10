@@ -108,10 +108,10 @@ public class split {
 		// Generate the execute sh
 		File ex = new File(pathW + "/conf/SPECT/mac/execute.sh");
 		String exShell = "#!/bin/bash" + '\n';
-		exShell = exShell + "let max = " + num + '\n' + "let count = 0" + '\n';
+		exShell = exShell + "max=" + num + '\n' + "count=0" + '\n';
 		exShell = exShell + "echo $count" + '\n' + "for i in {000..029}" + '\n' + "do" + '\n'
 				+ " taskset -c $count ./script_$i.sh 42800" + '\n' + " sleep 10s" + '\n' + " let count = 1 + count"
-				+ '\n' + " echo $count" + '\n' + " if [$count + 1 == $max]" + '\n' + " then" + '\n' + " break" + '\n'
+				+ '\n' + " echo $count" + '\n' + " if [$count+1 == $max]" + '\n' + " then" + '\n' + " break" + '\n'
 				+ " fi" + '\n' + "done";
 		FileWriter exwf = new FileWriter(ex, false);
 		exwf.write(exShell);

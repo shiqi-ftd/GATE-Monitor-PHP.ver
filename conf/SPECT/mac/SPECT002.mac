@@ -13,8 +13,8 @@
 
 # V I S U A L I S A T I O N
 #####
-#/vis/disable
-/control/execute vis.mac
+/vis/disable
+#/control/execute vis.mac
 
 # M A N D A T O R Y
 #####
@@ -57,7 +57,7 @@
 #/gate/SPECThead/orbiting/setSpeed 12 deg/s #0.12
 
 # setSpeed
-/gate/SPECThead/orbiting/setSpeed 0.1333333 deg/s
+/gate/SPECThead/orbiting/setSpeed .2666667 deg/s
 
 
 #/gate/SPECThead/orbiting/setPoint1 0 0 0 cm
@@ -70,10 +70,10 @@
 # 1. (exterior+interior) - Lead, 1 cm thick
 # 2. (collimeter mount)  - Tungsten
 # Housing
-/control/execute 1MME30_inveonHousing.mac
+/control/execute 1MGP10_inveonhousing.mac
 
 # Collimator
-/control/execute ../mac/1MME30.mac
+/control/execute ../mac/1MGP10.mac
 #/control/execute ../mac/1MHR05_30.mac
 #/control/execute ../mac/1MHR05.mac
 #/control/execute ../mac/1MME30.mac
